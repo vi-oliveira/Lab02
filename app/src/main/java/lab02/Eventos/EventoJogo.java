@@ -5,6 +5,7 @@
 
 package lab02.Eventos;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lab02.Local;
@@ -16,11 +17,10 @@ public class EventoJogo extends Evento {
     /**
     * Construtor da classe EventoEsporte
     * @param nome o nome do Evento
-    * @param local o local do Evento
     * @param precoIngresso o preço do Ingresso do Evento
     */
-    public EventoJogo(String nome, Local local, double precoIngresso, Organizadora organizadora, String data, List<String> times) {
-        super(nome, local, precoIngresso, organizadora, data);
+    public EventoJogo(String nome, double precoIngresso, Organizadora organizadora, LocalDate data, List<String> times) {
+        super(nome, precoIngresso, organizadora, data);
         this.times = times;
     }
 
@@ -38,7 +38,11 @@ public class EventoJogo extends Evento {
      */
     @Override
     public String descricao() {
-        return "Esporte: " + this.nome + " - Times: " + this.times + " - Local: " + this.local;
+        if (this.local != null){
+            return "Esporte: " + this.nome + " - Times: " + this.times + " - Local: " + this.local.getNome();
+        } else {
+            return "Esporte: " + this.nome + " - Times: " + this.times + " - Local: Indefinido";
+        }
     }
     
     /**

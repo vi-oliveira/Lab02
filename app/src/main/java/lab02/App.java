@@ -4,6 +4,7 @@
 
 package lab02;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import lab02.Eventos.EventoFestival;
 import lab02.Eventos.EventoJogo;
 import lab02.Eventos.EventoShow;
 import lab02.Eventos.ImobiliariaDeEventos;
+import lab02.Exceptions.CapacidadeInsuficienteException;
+import lab02.Exceptions.LocalIndisponivelException;
 import lab02.Exceptions.LocalNaoEncontradoException;
 
 /**
@@ -26,7 +29,7 @@ public class App {
      */
     public static void main(String[] args) {
 
-
+        /*
         // Desenvolvimento de Cenário de Uso
 
         // Criação de ingressos, locais e organizadora que serão usados nos exemplos de uso:
@@ -39,9 +42,9 @@ public class App {
 
         // Eventos para exemplos:
         EventoShow showAzul = superEventos.criarEvento("Caneta Azul", teatroArena,
-        200, "29/04/2025", "Manoel Gomes");
+        200, LocalDate.of(2025, 4, 29), "Manoel Gomes");
         EventoShow show2 = superEventos.criarEvento("Biridin", teatroArena,
-        400, "15/12/2025", "Michael Jackson");
+        400, LocalDate.of(2025,12, 15), "Michael Jackson");
 
         // Ingressos para exemplos:
         Ingresso ingresso1 = new Ingresso(showAzul, showAzul.getPrecoIngresso());
@@ -66,13 +69,13 @@ public class App {
         List<String> lineupFestival = new ArrayList<String>();
         lineupFestival.add("lineup1");
         EventoFestival eventoFestival = superEventos.criarEvento("Festival",
-        teatroArena, 20, "14/09/2025", lineupFestival, 4);
+        teatroArena, 20, LocalDate.of(2025, 9, 14), lineupFestival, 4);
 
         List<String> times = new ArrayList<String>();
         times.add("time1");
         times.add("time2");
         EventoJogo eventoJogo = superEventos.criarEvento("Campeonato",
-        teatroArena, 950, "20/02/2026", lineupFestival);
+        teatroArena, 950, LocalDate.of(2026, 2, 20), lineupFestival);
 
         // Sobrecarga nos ingressos dos clientes:
         Cliente Ana = new Cliente("Ana", "anana@unicamp.com");
@@ -112,6 +115,32 @@ public class App {
             }
         } catch (LocalNaoEncontradoException eMessage) {
             System.out.println("Nenhum local encontrado");
+        } */
+        Local teatroArena = new Local("Teatro de Arena", 100);
+        List<String> lineupFestival = new ArrayList<String>();
+        lineupFestival.add("lineup1");
+        Organizadora superEventos = new Organizadora("Super Eventos",
+        12345678, "Rua Adalberto Einstein nº321");
+
+        EventoFestival eventoFestival = superEventos.criarEvento("Festival",
+        20, LocalDate.of(2025, 9, 14), lineupFestival, 1);
+
+        EventoShow eventoShow = superEventos.criarEvento("show", 20, LocalDate.of(2025, 9, 16), "Manoel Gomes");
+
+        try{
+            teatroArena.alocarParaEvento(eventoFestival);
+        } catch (CapacidadeInsuficienteException e) {
+            System.out.println("sem espaço");
+        } catch (LocalIndisponivelException e){
+            System.out.println("indisponivel");
+        }
+
+        try{
+            teatroArena.alocarParaEvento(eventoShow);
+        } catch (CapacidadeInsuficienteException e) {
+            System.out.println("sem espaço 2");
+        } catch (LocalIndisponivelException e){
+            System.out.println("indisponivel 2");
         }
     }
 }

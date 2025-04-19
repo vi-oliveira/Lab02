@@ -5,18 +5,33 @@
  */
 package lab02;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeSet;
+
 import lab02.Eventos.Evento;
+import lab02.Eventos.EventoFestival;
+import lab02.Exceptions.CapacidadeInsuficienteException;
+import lab02.Exceptions.LocalIndisponivelException;
 
 /**
  * Contém a estrutura de implementação de um Local.
  * 
  * @author Gabriel Leite - 216180
+ * @author Vinícius de Oliveira - 251527
  */
 public class Local{
     private String nome;
     private double capacidadeMaxima;
-    private Boolean estaAlocado;
-    private String dataAlocacao;
+    private TreeSet<LocalDate> datasAlocadas;
+    // private List<LocalDate> datasAlocadas;
+    /*A ideia é que o datasAlocatas tenha um par chave e valor, onde
+     * a chave é a data de início de evento e o inteiro seja a duração dele em dias.
+     * Caso o objeto do evento não tenha o atributo duração (Não é eventoFestival),
+     * a duração será definida como 1 dia.
+     */
 
     /**
      * Construtor da classe Local
@@ -25,8 +40,7 @@ public class Local{
     public Local(String nome, double capacidadeMaxima){
         this.nome = nome;
         this.capacidadeMaxima = capacidadeMaxima;
-        this.estaAlocado = false;
-        this.dataAlocacao = "";
+        this.datasAlocadas = new TreeSet<LocalDate>();
     }
 
     /**
@@ -61,7 +75,38 @@ public class Local{
         this.capacidadeMaxima = capacidadeMaxima;
     }
 
-    public void alocarParaEvento(Evento evento){
-        // if (evento.getLocal())
+    private void alocarEventoFestival(EventoFestival eventoFest) throws LocalIndisponivelException {
+        // Verificar se cada dia do evento está livre
+        for (int i = 0; i < eventoFest.getDuracao(); i++){
+            if (datasAlocadas.contains(eventoFest.getData().plusDays(i))) {
+                throw new LocalIndisponivelException("Local não disponível nas datas do evento");
+            }
+        }
+        // Se não teve erro, todas as datas estão disponíveis
+        for (int i = 0; i < eventoFest.getDuracao(); i++){
+            datasAlocadas.add(eventoFest.getData().plusDays(i));
+        }
+        eventoFest.setLocal(this);
+    }
+
+    private void alocarEventoDeUmDia(Evento evento) throws LocalIndisponivelException{
+        if (datasAlocadas.contains(evento.getData())){
+            throw new LocalIndisponivelException("Local não disponível na data do evento");
+        }
+        datasAlocadas.add(evento.getData());
+        evento.setLocal(this);
+    }
+
+    public void alocarParaEvento(Evento evento) throws CapacidadeInsuficienteException, LocalIndisponivelException {
+        if (evento.getIngressosVendidos().size() == this.capacidadeMaxima){
+            throw new CapacidadeInsuficienteException("Capacidade máxima do local atingida");
+        } else if (evento instanceof EventoFestival){
+            /* Caso o evento seja do tipo festival, é necessário
+            ver a disponibilidade para mais de um dia */
+            EventoFestival eventoFest = (EventoFestival) evento;
+            alocarEventoFestival(eventoFest);
+        } else { 
+            alocarEventoDeUmDia(evento);
+        }
     }
 }

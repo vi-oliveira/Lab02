@@ -1,9 +1,19 @@
 /*
  * Material usado na disciplina MC322 - Programação orientada a objetos.
+ * 
+ * O atributo data foi alterado de String para LocalDate para que seja possível
+ * analisar mais facilmente se o local estará disponível para ser alocado para o
+ * evento na data ou, principalmente, nas datas em que determinado evento ocorre.
+ * 
+ * Para criar um objeto de algum tipo de evento, não é mais necessário fornecer o local,
+ * visto que ele será alocado para o evento posteriormente. Pela implementação original,
+ * o local na criação do evento, agora a relação entre os dois objetos se dá no caso da
+ * disponibilidade do local na data do evento.
  */
 
 package lab02.Eventos;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,27 +22,25 @@ import lab02.Ingresso;
 import lab02.Local;
 import lab02.Organizadora;
 import lab02.Exceptions.IngressoEsgotadoException;
-import lab02.Exceptions.LocalNaoEncontradoException;
 
 public abstract class Evento {
     protected String nome;
     protected Local local;
     protected double precoIngresso; // preço base do ingresso
     protected Organizadora organizadora;
-    protected String data;
+    protected LocalDate data;
     private List<Ingresso> ingressosVendidos;
 
     /**
      * Construtor da classe Evento
      * @param nome o nome do Evento
-     * @param local o local associado ao Evento
      * @param precoIngresso o preço do Ingresso do Evento
      * @param organizadora a organizadora do Evento
      * @param data a data do Evento
      */
-    public Evento(String nome, Local local, double precoIngresso, Organizadora organizadora, String data) {
+    public Evento(String nome, double precoIngresso, Organizadora organizadora, LocalDate data) {
         this.nome = nome;
-        this.local = local;
+        this.local = null;
         this.precoIngresso = precoIngresso; // modificar para representar o preço base do ingresso
         this.organizadora = organizadora;
         this.data = data;
@@ -95,8 +103,16 @@ public abstract class Evento {
      * Retorna a data do Evento
      * @return a data do Evento
      */
-    public String getData() {
+    public LocalDate getData() {
         return data;
+    }
+
+    /**
+     * Retorna a lista de ingressos vendidos
+     * @return a a lista de ingressos vendidos
+     */
+    public List<Ingresso> getIngressosVendidos(){
+        return ingressosVendidos;
     }
 
     /**
