@@ -3,9 +3,12 @@
  */
 
 
-package lab02;
+package lab02.Eventos;
 
 import java.util.List;
+
+import lab02.Local;
+import lab02.Organizadora;
 
 public class EventoJogo extends Evento {
         

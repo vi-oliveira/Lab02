@@ -2,8 +2,17 @@
  * Material usado na disciplina MC322 - Programação orientada a objetos.
  */
 
-package lab02;
+package lab02.Eventos;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import lab02.Cliente;
+import lab02.Ingresso;
+import lab02.Local;
+import lab02.Organizadora;
+import lab02.Exceptions.IngressoEsgotadoException;
+import lab02.Exceptions.LocalNaoEncontradoException;
 
 public abstract class Evento {
     protected String nome;
@@ -11,11 +20,15 @@ public abstract class Evento {
     protected double precoIngresso; // preço base do ingresso
     protected Organizadora organizadora;
     protected String data;
+    private List<Ingresso> ingressosVendidos;
 
     /**
      * Construtor da classe Evento
      * @param nome o nome do Evento
      * @param local o local associado ao Evento
+     * @param precoIngresso o preço do Ingresso do Evento
+     * @param organizadora a organizadora do Evento
+     * @param data a data do Evento
      */
     public Evento(String nome, Local local, double precoIngresso, Organizadora organizadora, String data) {
         this.nome = nome;
@@ -23,7 +36,7 @@ public abstract class Evento {
         this.precoIngresso = precoIngresso; // modificar para representar o preço base do ingresso
         this.organizadora = organizadora;
         this.data = data;
-
+        this.ingressosVendidos = new ArrayList<Ingresso>();
     }
 
     /**
@@ -86,5 +99,18 @@ public abstract class Evento {
         return data;
     }
 
-
+    /**
+     * Adiciona um novo ingresso à lista de ingressos vendidos
+     * @param ingresso o ingresso que foi vendido
+     * @param cliente o cliente que comprou o ingresso
+     * @throws IngressoEsgotadoException se a capacidade máxima do local do evento for atingida,
+     * é lançado o erro de ingresso esgotado
+     */
+    public void venderIngresso(Cliente cliente, Ingresso ingresso) throws IngressoEsgotadoException {
+        if (this.local.getCapacidade() == ingressosVendidos.size()){
+            throw new IngressoEsgotadoException("Os ingressos esgotaram");
+        }
+        this.ingressosVendidos.add(ingresso);
+        cliente.adicionarIngresso(ingresso);
+    }
 }

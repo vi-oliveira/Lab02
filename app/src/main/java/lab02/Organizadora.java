@@ -1,5 +1,11 @@
 package lab02;
 
+import java.util.List;
+
+import lab02.Eventos.EventoFestival;
+import lab02.Eventos.EventoJogo;
+import lab02.Eventos.EventoShow;
+
 public class Organizadora {
 
     private String nome;
@@ -18,6 +24,48 @@ public class Organizadora {
         this.endereco = endereco;
     }
 
+    /**
+    * Criador de eventos organizados por esta organizadora
+    * @param nome o nome do Evento
+    * @param local o local do Evento
+    * @param precoIngresso o preço do Ingresso do Evento
+    * @param data a data do Evento
+    * @param artista o artista do Evento
+    * @return o evento criado
+    */
+    public EventoShow criarEvento(String nome, Local local, double precoIngresso, String data, String artista){
+        EventoShow eventoCriado = new EventoShow(nome, local, precoIngresso, this, data, artista);
+        return eventoCriado;
+    }
+
+    /**
+    * Criador de eventos organizados por esta organizadora
+    * @param nome o nome do Evento
+    * @param local o local do Evento
+    * @param precoIngresso o preço do Ingresso do Evento
+    * @param data a data do Evento
+    * @param lineup o lineup do festival
+    * @param duracao a duracao do Evento
+    * @return o evento criado
+    */
+    public EventoFestival criarEvento(String nome, Local local, double precoIngresso, String data, List<String> lineup, int duracao){
+        EventoFestival eventoCriado = new EventoFestival(nome, local, precoIngresso, this, data, lineup, duracao);
+        return eventoCriado;
+    }
     
+    /**
+    * Criador de eventos organizados por esta organizadora
+    * @param nome o nome do Evento
+    * @param local o local do Evento
+    * @param precoIngresso o preço do Ingresso do Evento
+    * @param data a data do Evento
+    * @param times os times do jogo
+    * @return o evento criado
+    */
+    public EventoJogo criarEvento(String nome, Local local, double precoIngresso, String data, List<String> times){
+        EventoJogo eventoCriado = new EventoJogo(nome, local, precoIngresso, this, data, times);
+        return eventoCriado;
+    }
+
     
 }

@@ -3,7 +3,10 @@
  * Material usado na disciplina MC322 - Programação orientada a objetos.
  */
 
-package lab02;
+package lab02.Eventos;
+
+import lab02.Local;
+import lab02.Organizadora;
 
 public class EventoShow extends Evento {
         
@@ -14,13 +17,13 @@ public class EventoShow extends Evento {
     * @param nome o nome do Evento
     * @param local o local do Evento
     * @param precoIngresso o preço do Ingresso do Evento
-    * @param artista o artista do Evento
     * @param organizadora a organizadora do Evento
+    * @param data a data do Evento
+    * @param artista o artista do Evento
     */
     public EventoShow(String nome, Local local, double precoIngresso, Organizadora organizadora, String data, String artista) {
         super(nome, local, precoIngresso, organizadora, data);
         this.artista = artista;
-
     }
 
     /**

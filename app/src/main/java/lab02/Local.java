@@ -5,6 +5,8 @@
  */
 package lab02;
 
+import lab02.Eventos.Evento;
+
 /**
  * Contém a estrutura de implementação de um Local.
  * 
@@ -13,6 +15,8 @@ package lab02;
 public class Local{
     private String nome;
     private double capacidadeMaxima;
+    private Boolean estaAlocado;
+    private String dataAlocacao;
 
     /**
      * Construtor da classe Local
@@ -21,6 +25,8 @@ public class Local{
     public Local(String nome, double capacidadeMaxima){
         this.nome = nome;
         this.capacidadeMaxima = capacidadeMaxima;
+        this.estaAlocado = false;
+        this.dataAlocacao = "";
     }
 
     /**
@@ -53,5 +59,9 @@ public class Local{
      */
     public void setCapacidade(double capacidadeMaxima){
         this.capacidadeMaxima = capacidadeMaxima;
+    }
+
+    public void alocarParaEvento(Evento evento){
+        // if (evento.getLocal())
     }
 }
