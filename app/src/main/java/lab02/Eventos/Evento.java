@@ -116,6 +116,14 @@ public abstract class Evento {
     }
 
     /**
+     * Retorna a organizadora do Evento
+     * @return a organizadora do Evento
+     */
+    public Organizadora getOrganizadora(){
+        return this.organizadora;
+    }
+
+    /**
      * Adiciona um novo ingresso à lista de ingressos vendidos
      * @param ingresso o ingresso que foi vendido
      * @param cliente o cliente que comprou o ingresso
