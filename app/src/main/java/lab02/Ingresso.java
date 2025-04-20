@@ -31,8 +31,15 @@ public class Ingresso {
      * @return o preço do Ingresso
      */
     public double getPreco() {
-
         return this.preco;
+    }
+
+    /**
+     * Retorna o evento associado ao ingresso
+     * @return o evento associado ao ingresso
+     */
+    public Evento getEvento(){
+        return evento;
     }
 
     /**

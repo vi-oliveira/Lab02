@@ -26,12 +26,10 @@ public class Local{
     private String nome;
     private double capacidadeMaxima;
     private TreeSet<LocalDate> datasAlocadas;
-    // private List<LocalDate> datasAlocadas;
-    /*A ideia é que o datasAlocatas tenha um par chave e valor, onde
-     * a chave é a data de início de evento e o inteiro seja a duração dele em dias.
-     * Caso o objeto do evento não tenha o atributo duração (Não é eventoFestival),
-     * a duração será definida como 1 dia.
-     */
+    /* Como é preciso analisar várias datas para saber se 
+     * o local já está alocado para o dia do evento, resolvi
+     * usar uma árvore binária para deixar a busca mais eficiente.
+    */
 
     /**
      * Construtor da classe Local

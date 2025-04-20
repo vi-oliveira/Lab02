@@ -3,8 +3,12 @@
  */
 package lab02;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import lab02.Exceptions.CancelamentoNaoPermitidoException;
+import lab02.Exceptions.IngressoNaoEncontradoException;
 
 public class Cliente {
 
@@ -85,5 +89,25 @@ public class Cliente {
      */
     public List<Ingresso> getIngressos(){
         return ingressos;
+    }
+
+    /**
+     * Cancela um ingresso comprado
+     * Um ingresso só será removido com até 24 horas de antecedência
+     * do início do evento. Caso contrário, será lançada uma exceção.
+     * @param ingresso o ingresso a ser removido dos ingressos.
+     * @throws IngressoNaoEncontradoException Exceção para quando o ingresso não foi comprado pelo cliente
+     * @throws CancelamentoNaoPermitidoException Exceção para quando a data limite para o cancelamento do ingresso já foi ultrapassada
+     */
+    public void cancelarIngresso(Ingresso ingresso) throws IngressoNaoEncontradoException, CancelamentoNaoPermitidoException {
+        if (ingressos.contains(ingresso)){
+            LocalDate dataLimiteCancelamento = ingresso.getEvento().getData().minusDays(2);
+            if (LocalDate.now().isAfter(dataLimiteCancelamento)){
+                throw new CancelamentoNaoPermitidoException("A data limite para o cancelamento já foi ultrapassada");
+            }
+            ingressos.remove(ingresso);
+        } else {
+            throw new IngressoNaoEncontradoException("O ingresso não foi encontrado");
+        }
     }
 }

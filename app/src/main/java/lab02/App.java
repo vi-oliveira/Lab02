@@ -12,7 +12,9 @@ import lab02.Eventos.EventoFestival;
 import lab02.Eventos.EventoJogo;
 import lab02.Eventos.EventoShow;
 import lab02.Eventos.ImobiliariaDeEventos;
+import lab02.Exceptions.CancelamentoNaoPermitidoException;
 import lab02.Exceptions.CapacidadeInsuficienteException;
+import lab02.Exceptions.IngressoNaoEncontradoException;
 import lab02.Exceptions.LocalIndisponivelException;
 import lab02.Exceptions.LocalNaoEncontradoException;
 
@@ -141,6 +143,18 @@ public class App {
             System.out.println("sem espaço 2");
         } catch (LocalIndisponivelException e){
             System.out.println("indisponivel 2");
+        }
+
+        EventoShow eventoShow2 = superEventos.criarEvento("2", 20, LocalDate.of(2025, 4, 21), "Manoel Gomes");
+        Cliente Ana = new Cliente("Ana", "anana@unicamp.com");
+        Ingresso ingresso3 = new Ingresso(eventoShow2, eventoShow2.getPrecoIngresso());
+        Ana.adicionarIngresso(ingresso3);
+        try{
+            Ana.cancelarIngresso(ingresso3);
+        } catch (CancelamentoNaoPermitidoException e){
+            System.out.println(e);
+        } catch (IngressoNaoEncontradoException e){
+            System.out.println(e);
         }
     }
 }
