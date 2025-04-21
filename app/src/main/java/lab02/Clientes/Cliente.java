@@ -1,18 +1,21 @@
 /*
  * Material usado na disciplina MC322 - Programação orientada a objetos.
  */
-package lab02;
+package lab02.Clientes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import lab02.Ingresso;
+import lab02.Eventos.Evento;
 import lab02.Exceptions.CancelamentoNaoPermitidoException;
 import lab02.Exceptions.IngressoNaoEncontradoException;
 import lab02.Notificacoes.Notificacao;
 
-public class Cliente {
-
+public class Cliente implements CompararA {
     private String nome;
     private String email;
     private String telefone;
@@ -132,5 +135,19 @@ public class Cliente {
             notificacoesEnviadas.add(notificacao);
         }
         notificacoesPendentes.clear();
+    }
+
+    public Set<Evento> compararA(Cliente outroCliente){
+        Set<Evento> eventosEmComum = new HashSet<Evento>();
+
+        for (Ingresso ingressoCliente : this.ingressos){
+            Evento eventoAtual = ingressoCliente.getEvento();
+            for (Ingresso ingressoOutroCliente : outroCliente.getIngressos()){
+                if (eventoAtual.equals(ingressoOutroCliente.getEvento())){
+                    eventosEmComum.add(eventoAtual);
+                }
+            }
+        }
+        return eventosEmComum;
     }
 }

@@ -1,6 +1,6 @@
 package lab02.Notificacoes;
 
-public class NotificacaoEmail extends Notificacao {
+public class NotificacaoEmail extends Notificacao implements Notificavel {
     private String assunto;
 
     public NotificacaoEmail(String mensagem, String assunto){
@@ -12,7 +12,6 @@ public class NotificacaoEmail extends Notificacao {
         return assunto;
     }
 
-    @Override
     public void notificar(){
         for (int i = 0; i < this.getMensagem().length(); i++)
             System.out.printf("-");

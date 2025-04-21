@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import lab02.Clientes.Cliente;
 import lab02.Eventos.Evento;
 import lab02.Eventos.EventoFestival;
 import lab02.Eventos.EventoJogo;
@@ -249,6 +250,18 @@ public class App {
         julio.adiconarNotificacao(julioNotificaSMS);
         julio.enviarNotificacoes();
 
-        
+
+        // DEMONSTRAÇÃO PASSO 6:
+        System.out.println("\nDEMONSTRAÇÃO DA COMPARAÇÃO:");
+        Cliente gabriela = new Cliente("Gabriela", "EEEMAIL@gmail.com", "9999-1111");
+        Ingresso ingressoShow2Repete = new Ingresso(eventoShow2, eventoShow2.getPrecoIngresso());
+        Ingresso ingressoGabriela = new Ingresso(festivalCarros, festivalCarros.getPrecoIngresso());
+        gabriela.adicionarIngresso(ingressoShow2Repete); // Julio também tem ingresso para este evento
+        gabriela.adicionarIngresso(ingressoGabriela);
+
+        System.out.println("Eventos em comum: ");
+        for (Evento evento : julio.compararA(gabriela)){
+            System.out.println("Nome do evento: " + evento.getNome());
+        }
     }
 }

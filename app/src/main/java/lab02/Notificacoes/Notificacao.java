@@ -1,6 +1,6 @@
 package lab02.Notificacoes;
 
-public abstract class Notificacao {
+public abstract class Notificacao implements Notificavel {
     private String mensagem;
 
     public Notificacao(String mensagem){

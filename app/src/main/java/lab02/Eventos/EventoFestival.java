@@ -10,7 +10,7 @@ import java.util.List;
 import lab02.Local;
 import lab02.Organizadora;
 
-public class EventoFestival extends Evento {
+public class EventoFestival extends Evento implements Duravel {
         
     private List<String> lineup;
     private int duracao;

@@ -17,10 +17,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import lab02.Cliente;
 import lab02.Ingresso;
 import lab02.Local;
 import lab02.Organizadora;
+import lab02.Clientes.Cliente;
 import lab02.Exceptions.IngressoEsgotadoException;
 
 public abstract class Evento {

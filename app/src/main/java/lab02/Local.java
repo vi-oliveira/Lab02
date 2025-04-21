@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
+import lab02.Eventos.Duravel;
 import lab02.Eventos.Evento;
 import lab02.Eventos.EventoFestival;
 import lab02.Exceptions.CapacidadeInsuficienteException;
@@ -73,18 +74,19 @@ public class Local{
         this.capacidadeMaxima = capacidadeMaxima;
     }
 
-    private void alocarEventoFestival(EventoFestival eventoFest) throws LocalIndisponivelException {
+    private void alocarEventoDuravel(Duravel eventoDuravel) throws LocalIndisponivelException {
         // Verificar se cada dia do evento está livre
-        for (int i = 0; i < eventoFest.getDuracao(); i++){
-            if (datasAlocadas.contains(eventoFest.getData().plusDays(i))) {
+        for (int i = 0; i < eventoDuravel.getDuracao(); i++){
+            if (datasAlocadas.contains(eventoDuravel.getData().plusDays(i))) {
                 throw new LocalIndisponivelException("Local não disponível nas datas do evento");
             }
         }
         // Se não teve erro, todas as datas estão disponíveis
-        for (int i = 0; i < eventoFest.getDuracao(); i++){
-            datasAlocadas.add(eventoFest.getData().plusDays(i));
+        for (int i = 0; i < eventoDuravel.getDuracao(); i++){
+            datasAlocadas.add(eventoDuravel.getData().plusDays(i));
         }
-        eventoFest.setLocal(this);
+        Evento eventoSetLocal = (Evento) eventoDuravel;
+        eventoSetLocal.setLocal(this);
     }
 
     private void alocarEventoDeUmDia(Evento evento) throws LocalIndisponivelException{
@@ -98,11 +100,12 @@ public class Local{
     public void alocarParaEvento(Evento evento) throws CapacidadeInsuficienteException, LocalIndisponivelException {
         if (evento.getIngressosVendidos().size() == this.capacidadeMaxima){
             throw new CapacidadeInsuficienteException("Capacidade máxima do local atingida");
-        } else if (evento instanceof EventoFestival){
-            /* Caso o evento seja do tipo festival, é necessário
-            ver a disponibilidade para mais de um dia */
-            EventoFestival eventoFest = (EventoFestival) evento;
-            alocarEventoFestival(eventoFest);
+        } else if (evento instanceof Duravel){
+            /* Caso o evento possua um atributo duração (dura alguns dias),
+            é necessário ver a disponibilidade para mais de um dia.
+            Para isso, esses eventos implementam a interface "Duravel"*/
+            Duravel eventoDuravel = (Duravel) evento;
+            alocarEventoDuravel(eventoDuravel);
         } else { 
             alocarEventoDeUmDia(evento);
         }
