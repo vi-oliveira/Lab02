@@ -9,22 +9,29 @@ import java.util.List;
 
 import lab02.Exceptions.CancelamentoNaoPermitidoException;
 import lab02.Exceptions.IngressoNaoEncontradoException;
+import lab02.Notificacoes.Notificacao;
 
 public class Cliente {
 
     private String nome;
     private String email;
+    private String telefone;
     private List<Ingresso> ingressos;
+    private List<Notificacao> notificacoesPendentes;
+    private List<Notificacao> notificacoesEnviadas;
 
     /**
      * Construtor da classe cliente
      * @param nome o nome do cliente
      * @param email o email do cliente
      */
-    public Cliente(String nome, String email){
+    public Cliente(String nome, String email, String telefone){
         this.nome = nome;
         this.email = email;
+        this.telefone = telefone;
         this.ingressos = new ArrayList<Ingresso>();
+        this.notificacoesPendentes = new ArrayList<Notificacao>();
+        this.notificacoesEnviadas = new ArrayList<Notificacao>();
     }
 
     /**
@@ -57,6 +64,10 @@ public class Cliente {
      */
     public void setEmail(String email){
         this.email = email;
+    }
+
+    public String getTelefone(){
+        return telefone;
     }
 
     /**
@@ -109,5 +120,17 @@ public class Cliente {
         } else {
             throw new IngressoNaoEncontradoException("O ingresso não foi encontrado");
         }
+    }
+
+    public void adiconarNotificacao(Notificacao notificao){
+        this.notificacoesPendentes.add(notificao);
+    }
+
+    public void enviarNotificacoes(){
+        for (Notificacao notificacao : notificacoesPendentes){
+            notificacao.notificar();
+            notificacoesEnviadas.add(notificacao);
+        }
+        notificacoesPendentes.clear();
     }
 }

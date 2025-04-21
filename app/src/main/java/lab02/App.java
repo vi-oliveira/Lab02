@@ -4,7 +4,6 @@
 
 package lab02;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +25,9 @@ import lab02.Filtros.EventoPorLocalFiltro;
 import lab02.Filtros.EventoPorNomeFiltro;
 import lab02.Filtros.EventoPorTipoFiltro;
 import lab02.Filtros.Filtro;
+import lab02.Notificacoes.Notificacao;
+import lab02.Notificacoes.NotificacaoEmail;
+import lab02.Notificacoes.NotificacaoSMS;
 
 /**
  * Contém a estrutura de implementação da aplicação.
@@ -63,7 +65,7 @@ public class App {
 
         // DEMONSTRAÇÃO PASSO 1:
         System.out.println("DEMONSTRAÇÃO DO CLIENTE:");
-        Cliente Alonso = new Cliente("Alonso", "Alonso@gmail.com");
+        Cliente Alonso = new Cliente("Alonso", "Alonso@gmail.com", "1234-4321");
         Alonso.adicionarIngresso(ingresso1);
         Alonso.adicionarIngresso(ingresso2);
 
@@ -85,7 +87,7 @@ public class App {
         950, LocalDate.of(2026, 2, 20), times);
 
         // Sobrecarga nos ingressos dos clientes:
-        Cliente Ana = new Cliente("Ana", "anana@unicamp.com");
+        Cliente Ana = new Cliente("Ana", "anana@unicamp.com", "9876-6789");
         Ingresso ingresso3 = new Ingresso(showAzul, showAzul.getPrecoIngresso());
         Ingresso ingressoFest = new Ingresso(eventoFestival, eventoFestival.getPrecoIngresso());
         Ingresso ingressoJogo = new Ingresso(eventoJogo, eventoJogo.getPrecoIngresso());
@@ -153,7 +155,7 @@ public class App {
         }
 
         EventoShow eventoShow2 = superEventos.criarEvento("Evento 2", 20, LocalDate.of(2025, 4, 21), "Manoel Gomes");
-        Cliente julio = new Cliente("Julio", "julio@yahoo.com.br");
+        Cliente julio = new Cliente("Julio", "julio@yahoo.com.br", "4402-8922");
         Ingresso ingresso4 = new Ingresso(eventoShow2, eventoShow2.getPrecoIngresso());
         julio.adicionarIngresso(ingresso4);
         
@@ -232,5 +234,21 @@ public class App {
         List<Evento> eventosFiltradosPorTipoLocal = superEventos.buscarEventos(filtrosTipoLocal);
         System.out.println(" - Eventos filtrados por tipo e local:");
         for(Evento evento : eventosFiltradosPorTipoLocal) System.out.println(evento.getNome());
+
+
+        // DEMONSTRAÇÃO PASSO 5:
+        System.out.println("\nDEMONSTRAÇÃO DAS NOTIFICAÇÕES:");
+        Notificacao julioNotificacaoEmail = new NotificacaoEmail(
+            "Houve uma tentativa de login na sua conta recentemente.",
+            "Login desonhecido");
+
+        Notificacao julioNotificaSMS = new NotificacaoSMS(
+        "Confira a nova promoção de ingressos para shows!!!");
+
+        julio.adiconarNotificacao(julioNotificacaoEmail);
+        julio.adiconarNotificacao(julioNotificaSMS);
+        julio.enviarNotificacoes();
+
+        
     }
 }
