@@ -131,10 +131,25 @@ public abstract class Evento {
      * é lançado o erro de ingresso esgotado
      */
     public void venderIngresso(Cliente cliente, Ingresso ingresso) throws IngressoEsgotadoException {
-        if (this.local.getCapacidade() == ingressosVendidos.size()){
+        if (ingressosVendidos.size() + 1 > this.local.getCapacidade()){
             throw new IngressoEsgotadoException("Os ingressos esgotaram");
         }
         this.ingressosVendidos.add(ingresso);
         cliente.adicionarIngresso(ingresso);
+    }
+
+    /**
+     * Adiciona um novo ingresso à lista de ingressos vendidos
+     * @param ingresso o ingresso que foi vendido
+     * @param cliente o cliente que comprou o ingresso
+     * @throws IngressoEsgotadoException se a capacidade máxima do local do evento for atingida,
+     * é lançado o erro de ingresso esgotado
+     */
+    public void venderIngresso(Cliente cliente, List<Ingresso> ingressos) throws IngressoEsgotadoException {
+        if (ingressosVendidos.size() + ingressos.size() > this.local.getCapacidade()){
+            throw new IngressoEsgotadoException("Os ingressos esgotaram");
+        }
+        this.ingressosVendidos.addAll(ingressos);
+        cliente.adicionarIngresso(ingressos);
     }
 }

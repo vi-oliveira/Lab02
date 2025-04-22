@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lab02.Eventos.Evento;
+import lab02.Eventos.EventoEmBar;
 import lab02.Eventos.EventoFestival;
 import lab02.Eventos.EventoJogo;
+import lab02.Eventos.EventoMusicaAoVivo;
 import lab02.Eventos.EventoShow;
-import lab02.Filtros.Filtro;
+import lab02.Eventos.HistoricoEventos;
+import lab02.Eventos.Caracteristicas.CaracteristicaEventoEmBar;
+import lab02.Eventos.Caracteristicas.CaracteristicaEventoMusicaAoVivo;
 
 public class Organizadora {
 
@@ -39,9 +43,10 @@ public class Organizadora {
     * @param artista o artista do Evento
     * @return o evento criado
     */
-    public EventoShow criarEvento(String nome, double precoIngresso, LocalDate data, String artista){
+    public EventoShow criarEvento(String nome, double precoIngresso, LocalDate data, String artista, HistoricoEventos historico){
         EventoShow eventoCriado = new EventoShow(nome, precoIngresso, this, data, artista);
         eventosOrganizados.add(eventoCriado);
+        historico.adicionarEvento(eventoCriado);
         return eventoCriado;
     }
 
@@ -55,9 +60,10 @@ public class Organizadora {
     * @param duracao a duracao do Evento
     * @return o evento criado
     */
-    public EventoFestival criarEvento(String nome, double precoIngresso, LocalDate data, List<String> lineup, int duracao){
+    public EventoFestival criarEvento(String nome, double precoIngresso, LocalDate data, List<String> lineup, int duracao, HistoricoEventos historico){
         EventoFestival eventoCriado = new EventoFestival(nome, precoIngresso, this, data, lineup, duracao);
         eventosOrganizados.add(eventoCriado);
+        historico.adicionarEvento(eventoCriado);
         return eventoCriado;
     }
     
@@ -67,17 +73,46 @@ public class Organizadora {
     * @param local o local do Evento
     * @param precoIngresso o preço do Ingresso do Evento
     * @param data a data do Evento
-    * @param times os times do jogo
+    * @param caracteristicas as caracteriticas de um EventoEmBar
     * @return o evento criado
     */
-    public EventoJogo criarEvento(String nome, double precoIngresso, LocalDate data, List<String> times){
-        EventoJogo eventoCriado = new EventoJogo(nome, precoIngresso, this, data, times);
+    public EventoEmBar criarEvento(String nome, double precoIngresso, LocalDate data, CaracteristicaEventoEmBar caracteristicas, HistoricoEventos historico){
+        EventoEmBar eventoCriado = new EventoEmBar(nome, precoIngresso, this, data, caracteristicas);
         eventosOrganizados.add(eventoCriado);
+        historico.adicionarEvento(eventoCriado);
         return eventoCriado;
     }
 
-    public List<Evento> buscarEventos(Filtro filtro){
-        List<Evento> eventosFiltrados = filtro.filtrar(this.eventosOrganizados);
-        return eventosFiltrados;
+    /**
+    * Criador de eventos organizados por esta organizadora
+    * @param nome o nome do Evento
+    * @param local o local do Evento
+    * @param precoIngresso o preço do Ingresso do Evento
+    * @param data a data do Evento
+    * @param caracteristicas as caracteriticas de um EventoMusicaAoVivo
+    * @return o evento criado
+    */
+    public EventoMusicaAoVivo criarEvento(String nome, double precoIngresso, LocalDate data, CaracteristicaEventoMusicaAoVivo caracteristicas, HistoricoEventos historico){
+        EventoMusicaAoVivo eventoCriado = new EventoMusicaAoVivo(nome, precoIngresso, this, data, caracteristicas);
+        eventosOrganizados.add(eventoCriado);
+        historico.adicionarEvento(eventoCriado);
+        return eventoCriado;
     }
+
+    /**
+    * Criador de eventos organizados por esta organizadora
+    * @param nome o nome do Evento
+    * @param local o local do Evento
+    * @param precoIngresso o preço do Ingresso do Evento
+    * @param data a data do Evento
+    * @param times os times do jogo
+    * @return o evento criado
+    */
+    public EventoJogo criarEvento(String nome, double precoIngresso, LocalDate data, List<String> times, HistoricoEventos historico){
+        EventoJogo eventoCriado = new EventoJogo(nome, precoIngresso, this, data, times);
+        eventosOrganizados.add(eventoCriado);
+        historico.adicionarEvento(eventoCriado);
+        return eventoCriado;
+    }
+
 }

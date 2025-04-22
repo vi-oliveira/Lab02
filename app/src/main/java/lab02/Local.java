@@ -6,14 +6,10 @@
 package lab02;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.TreeSet;
 
 import lab02.Eventos.Duravel;
 import lab02.Eventos.Evento;
-import lab02.Eventos.EventoFestival;
 import lab02.Exceptions.CapacidadeInsuficienteException;
 import lab02.Exceptions.LocalIndisponivelException;
 

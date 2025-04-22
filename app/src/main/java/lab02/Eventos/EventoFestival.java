@@ -7,7 +7,6 @@ package lab02.Eventos;
 import java.time.LocalDate;
 import java.util.List;
 
-import lab02.Local;
 import lab02.Organizadora;
 
 public class EventoFestival extends Evento implements Duravel {
