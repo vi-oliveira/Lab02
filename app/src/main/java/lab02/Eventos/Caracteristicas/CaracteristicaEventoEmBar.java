@@ -25,7 +25,7 @@ public class CaracteristicaEventoEmBar extends CaracteristicaDeEvento {
 
     @Override
     public String descricao(){
-        return "Evento no bar " + nomeDoBar + ", Happy Hour Inicio: " +
-         inicioHappyHour + ", Duração: + " + duracaoHappyHour;
+        return "Evento no bar: " + nomeDoBar + ", Happy Hour Inicio: " +
+         inicioHappyHour + ", Duração: " + duracaoHappyHour;
     }
 }

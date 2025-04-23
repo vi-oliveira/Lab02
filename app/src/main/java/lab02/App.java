@@ -108,8 +108,8 @@ public class App {
         }
 
         List<String> times = new ArrayList<String>(Arrays.asList("time1", "time2"));
-        EventoJogo eventoJogo = superEventos.criarEvento("Campeonato",
-        950, LocalDate.of(2026, 2, 20), times, historico);
+        // EventoJogo eventoJogo = superEventos.criarEvento("Campeonato",
+        // 950, LocalDate.of(2026, 2, 20), times, historico);
 
         // Sobrecarga nos ingressos dos clientes:
         Cliente Ana = new Cliente("Ana", "anana@unicamp.com", "9876-6789");
@@ -199,7 +199,7 @@ public class App {
             System.out.println(e);
         }
 
-        Cliente julio = new Cliente("Julio", "julio@yahoo.com.br", "4402-8922");
+        Cliente julio = new Cliente("Julio", "julio@yahoo.com.br", "4002-8922");
         Ingresso ingresso4 = new Ingresso(eventoShow2, eventoShow2.getPrecoIngresso());
         try{
             eventoShow2.venderIngresso(julio, ingresso4);
@@ -304,7 +304,8 @@ public class App {
         Ingresso ingressoShow2Repete = new Ingresso(eventoShow2, eventoShow2.getPrecoIngresso());
         Ingresso ingressoGabriela = new Ingresso(festivalCarros, festivalCarros.getPrecoIngresso());
         try{
-            eventoShow2.venderIngresso(gabriela, ingressoShow2Repete); // Julio também tem ingresso para este evento
+            eventoShow2.venderIngresso(julio, ingresso4); // Ingresso 4 é para o EventoShow2
+            eventoShow2.venderIngresso(gabriela, ingressoShow2Repete); // Julio e Gabriela têm ingresso para este evento
             festivalCarros.venderIngresso(gabriela, ingressoGabriela);
         } catch (Exception e) {
             System.out.println(e);

@@ -105,6 +105,14 @@ public class Cliente implements CompararA {
         return ingressos;
     }
 
+    public List<Notificacao> getNotificaoPendentes(){
+        return notificacoesPendentes;
+    }
+    
+    public List<Notificacao> getNotificaoEnviadas(){
+        return notificacoesEnviadas;
+    }
+
     /**
      * Cancela um ingresso comprado
      * Um ingresso só será removido com até 24 horas de antecedência
