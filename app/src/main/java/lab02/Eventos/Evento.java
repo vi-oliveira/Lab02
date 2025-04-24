@@ -21,6 +21,7 @@ import lab02.Ingresso;
 import lab02.Local;
 import lab02.Organizadora;
 import lab02.Clientes.Cliente;
+import lab02.Exceptions.EventoNaoEncontradoException;
 import lab02.Exceptions.IngressoEsgotadoException;
 
 public abstract class Evento {
@@ -130,9 +131,12 @@ public abstract class Evento {
      * @throws IngressoEsgotadoException se a capacidade máxima do local do evento for atingida,
      * é lançado o erro de ingresso esgotado
      */
-    public void venderIngresso(Cliente cliente, Ingresso ingresso) throws IngressoEsgotadoException {
+    public void venderIngresso(Cliente cliente, Ingresso ingresso) throws IngressoEsgotadoException, EventoNaoEncontradoException {
         if (ingressosVendidos.size() + 1 > this.local.getCapacidade()){
             throw new IngressoEsgotadoException("Os ingressos esgotaram");
+        }
+        if (!(ingresso.getEvento().equals(this))){
+            throw new EventoNaoEncontradoException("O evento do ingresso e o evento fornecido são diferentes");
         }
         this.ingressosVendidos.add(ingresso);
         cliente.adicionarIngresso(ingresso);
@@ -145,9 +149,14 @@ public abstract class Evento {
      * @throws IngressoEsgotadoException se a capacidade máxima do local do evento for atingida,
      * é lançado o erro de ingresso esgotado
      */
-    public void venderIngresso(Cliente cliente, List<Ingresso> ingressos) throws IngressoEsgotadoException {
+    public void venderIngresso(Cliente cliente, List<Ingresso> ingressos) throws IngressoEsgotadoException, EventoNaoEncontradoException {
         if (ingressosVendidos.size() + ingressos.size() > this.local.getCapacidade()){
             throw new IngressoEsgotadoException("Os ingressos esgotaram");
+        }
+        for (Ingresso ingresso : ingressos){
+            if (!(ingresso.getEvento().equals(this))){
+                throw new EventoNaoEncontradoException("O evento de algum ingresso e o evento fornecido são diferentes (Nenhum ingresso vendido)");
+            }
         }
         this.ingressosVendidos.addAll(ingressos);
         cliente.adicionarIngresso(ingressos);
