@@ -83,7 +83,7 @@ public class App {
         System.out.println("DEMONSTRAÇÃO DO CLIENTE:");
         Cliente Alonso = new Cliente("Alonso", "Alonso@gmail.com", "1234-4321");
         try{
-            showAzul.venderIngresso(Alonso, ingresso2);
+            showAzul.venderIngresso(Alonso, ingresso1);
             show2.venderIngresso(Alonso, ingresso2);
         } catch (Exception e) {
             System.out.println(e);

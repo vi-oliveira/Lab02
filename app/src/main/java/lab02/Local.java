@@ -2,6 +2,9 @@
  * Local.java
  * 
  * Material usado na disciplina MC322 - Programação orientada a objetos.
+ * 
+ * A documentação para javadoc de alguns métodos deste arquivo foi
+ * feita com o uso do ChatGPT e posteriormente revisada e/ou corrigida.
  */
 package lab02;
 
@@ -39,16 +42,16 @@ public class Local{
     }
 
     /**
-     * Retorna o nome do evento
-     * @return o nome do evento
+     * Retorna o nome do local
+     * @return o nome do local
      */
     public String getNome(){
         return nome;
     }
 
     /**
-     * Altera o nome do evento para `nome` 
-     * @param nome o novo nome do evento
+     * Altera o nome do local para `nome` 
+     * @param nome o novo nome do local
      */
     public void setNome(String nome){
         this.nome = nome;
@@ -70,11 +73,20 @@ public class Local{
         this.capacidadeMaxima = capacidadeMaxima;
     }
 
-    private void alocarEventoDuravel(Duravel eventoDuravel) throws LocalIndisponivelException {
+    /**
+    * Aloca um evento durável (com duração de vários dias) para o local,
+    * verificando se todas as datas necessárias estão disponíveis.
+    *
+    * @param eventoDuravel o evento durável a ser alocado
+    * @throws LocalIndisponivelException se alguma das datas já estiver ocupada
+    */
+    private void alocarEventoDuravel(Duravel eventoDuravel)
+    throws LocalIndisponivelException {
         // Verificar se cada dia do evento está livre
         for (int i = 0; i < eventoDuravel.getDuracao(); i++){
             if (datasAlocadas.contains(eventoDuravel.getData().plusDays(i))) {
-                throw new LocalIndisponivelException("Local não disponível nas datas do evento");
+                throw new LocalIndisponivelException(
+                    "Local não disponível nas datas do evento");
             }
         }
         // Se não teve erro, todas as datas estão disponíveis
@@ -85,17 +97,35 @@ public class Local{
         eventoSetLocal.setLocal(this);
     }
 
-    private void alocarEventoDeUmDia(Evento evento) throws LocalIndisponivelException{
+    /**
+    * Aloca um evento de um único dia para o local, verificando se a data está disponível.
+    *
+    * @param evento o evento a ser alocado
+    * @throws LocalIndisponivelException se a data já estiver ocupada
+    */
+    private void alocarEventoDeUmDia(Evento evento)
+    throws LocalIndisponivelException{
         if (datasAlocadas.contains(evento.getData())){
-            throw new LocalIndisponivelException("Local não disponível na data do evento");
+            throw new LocalIndisponivelException(
+                "Local não disponível na data do evento");
         }
         datasAlocadas.add(evento.getData());
         evento.setLocal(this);
     }
 
-    public void alocarParaEvento(Evento evento) throws CapacidadeInsuficienteException, LocalIndisponivelException {
+    /**
+    * Aloca um evento (durável ou de um dia) para este local, verificando a disponibilidade
+    * de datas e a capacidade do local.
+    *
+    * @param evento o evento a ser alocado
+    * @throws CapacidadeInsuficienteException se a capacidade máxima do local for atingida
+    * @throws LocalIndisponivelException se o local estiver indisponível na(s) data(s) do evento
+    */
+    public void alocarParaEvento(Evento evento)
+    throws CapacidadeInsuficienteException, LocalIndisponivelException {
         if (evento.getIngressosVendidos().size() == this.capacidadeMaxima){
-            throw new CapacidadeInsuficienteException("Capacidade máxima do local atingida");
+            throw new CapacidadeInsuficienteException(
+                "Capacidade máxima do local atingida");
         } else if (evento instanceof Duravel){
             /* Caso o evento possua um atributo duração (dura alguns dias),
             é necessário ver a disponibilidade para mais de um dia.

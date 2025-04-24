@@ -7,8 +7,8 @@
  * 
  * Para criar um objeto de algum tipo de evento, não é mais necessário fornecer o local,
  * visto que ele será alocado para o evento posteriormente. Pela implementação original,
- * o local na criação do evento, agora a relação entre os dois objetos se dá no caso da
- * disponibilidade do local na data do evento.
+ * o local era fornecido na criação do evento, agora a relação entre os dois objetos se
+ * dá no caso da disponibilidade do local na data do evento.
  */
 
 package lab02.Eventos;
@@ -136,7 +136,7 @@ public abstract class Evento {
             throw new IngressoEsgotadoException("Os ingressos esgotaram");
         }
         if (!(ingresso.getEvento().equals(this))){
-            throw new EventoNaoEncontradoException("O evento do ingresso e o evento fornecido são diferentes");
+            throw new EventoNaoEncontradoException("O evento do ingresso e o evento fornecido são diferentes: " + ingresso.getEvento().getNome() + " != " + this.getNome());
         }
         this.ingressosVendidos.add(ingresso);
         cliente.adicionarIngresso(ingresso);

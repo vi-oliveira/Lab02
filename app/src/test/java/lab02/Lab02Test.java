@@ -108,7 +108,7 @@ public class Lab02Test {
          * o dia anterior do Evento.
          * Para que o teste funcione, a data do evento está definida como hoje.
          * Assim, como a tentativa de cancelamento vai ser no dia do evento,
-         * será lançada a excessão.
+         * será lançada a exceção.
          */
         EventoShow showGoogle = javaEventos.criarEvento("Músicas IA",
         150, LocalDate.now(), "Chat Gemini", historico);
@@ -163,7 +163,7 @@ public class Lab02Test {
 
         Ingresso ingressoShowGoogle = new Ingresso(showGoogle, showGoogle.getPrecoIngresso());
 
-        String mensagemDeErroEsperada = "O evento do ingresso e o evento fornecido são diferentes";
+        String mensagemDeErroEsperada = "O evento do ingresso e o evento fornecido são diferentes: Músicas IA != Músicas OS";
         String mensagemDeErroRecebida = null;
         
         try{
