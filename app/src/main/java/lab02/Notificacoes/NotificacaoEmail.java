@@ -11,13 +11,14 @@ package lab02.Notificacoes;
 /**
  * Representa uma notificação do tipo e-mail.
  * 
- * Esta classe estende {@link Notificacao} e inclui um campo adicional para o
+ * Esta classe implementa {@link Notificavel} e inclui um campo adicional para o
  * assunto do e-mail. A notificação é exibida no console com um formato visual
  * simples.
  * 
  * @author Vinícius de Oliveira - 251527
  */
-public class NotificacaoEmail extends Notificacao {
+public class NotificacaoEmail implements Notificavel {
+    private String mensagem;
     private String assunto;
 
     /**
@@ -27,8 +28,24 @@ public class NotificacaoEmail extends Notificacao {
      * @param assunto o assunto do e-mail
      */
     public NotificacaoEmail(String mensagem, String assunto){
-        super(mensagem);
+        this.mensagem = mensagem;
         this.assunto = assunto;
+    }
+
+    /**
+     * Retorna a mensagem da notificação.
+     * @return a mensagem da notificação
+     */
+    public String getMensagem(){
+        return mensagem;
+    }
+
+    /**
+     * Define uma nova mensagem para a notificação.
+     * @param novaMensagem a nova mensagem a ser definida
+     */
+    public void setMensagem(String novaMensagem){
+        this.mensagem = novaMensagem;
     }
 
     /**
@@ -47,16 +64,16 @@ public class NotificacaoEmail extends Notificacao {
      */
     @Override
     public void notificar(){
-        for (int i = 0; i < this.getMensagem().length(); i++)
+        for (int i = 0; i < this.mensagem.length(); i++)
             System.out.printf("-");
         System.out.printf("\n");
 
         System.out.println("Assunto: " + this.assunto);
 
-        for (int i = 0; i < this.getMensagem().length(); i++)
+        for (int i = 0; i < this.mensagem.length(); i++)
             System.out.printf("-");
         System.out.printf("\n");
 
-        System.out.println(this.getMensagem());
+        System.out.println(this.mensagem);
     }
 }

@@ -29,9 +29,9 @@ import lab02.Filtros.EventoPorLocalFiltro;
 import lab02.Filtros.EventoPorNomeFiltro;
 import lab02.Filtros.EventoPorTipoFiltro;
 import lab02.Filtros.Filtro;
-import lab02.Notificacoes.Notificacao;
 import lab02.Notificacoes.NotificacaoEmail;
 import lab02.Notificacoes.NotificacaoSMS;
+import lab02.Notificacoes.Notificavel;
 
 /**
  * Contém a estrutura de implementação da aplicação.
@@ -286,11 +286,11 @@ public class App {
 
         // DEMONSTRAÇÃO PASSO 5:
         System.out.println("\nDEMONSTRAÇÃO DAS NOTIFICAÇÕES:");
-        Notificacao julioNotificacaoEmail = new NotificacaoEmail(
+        Notificavel julioNotificacaoEmail = new NotificacaoEmail(
             "Houve uma tentativa de login na sua conta recentemente.",
             "Login desonhecido");
 
-        Notificacao julioNotificaSMS = new NotificacaoSMS(
+        Notificavel julioNotificaSMS = new NotificacaoSMS(
         "Confira a nova promoção de ingressos para shows!!!");
 
         julio.adiconarNotificacao(julioNotificacaoEmail);

@@ -13,15 +13,15 @@ import lab02.Ingresso;
 import lab02.Eventos.Evento;
 import lab02.Exceptions.CancelamentoNaoPermitidoException;
 import lab02.Exceptions.IngressoNaoEncontradoException;
-import lab02.Notificacoes.Notificacao;
+import lab02.Notificacoes.Notificavel;
 
 public class Cliente implements CompararA {
     private String nome;
     private String email;
     private String telefone;
     private List<Ingresso> ingressos;
-    private List<Notificacao> notificacoesPendentes;
-    private List<Notificacao> notificacoesEnviadas;
+    private List<Notificavel> notificacoesPendentes;
+    private List<Notificavel> notificacoesEnviadas;
 
     /**
      * Construtor da classe cliente
@@ -33,8 +33,8 @@ public class Cliente implements CompararA {
         this.email = email;
         this.telefone = telefone;
         this.ingressos = new ArrayList<Ingresso>();
-        this.notificacoesPendentes = new ArrayList<Notificacao>();
-        this.notificacoesEnviadas = new ArrayList<Notificacao>();
+        this.notificacoesPendentes = new ArrayList<Notificavel>();
+        this.notificacoesEnviadas = new ArrayList<Notificavel>();
     }
 
     /**
@@ -105,11 +105,11 @@ public class Cliente implements CompararA {
         return ingressos;
     }
 
-    public List<Notificacao> getNotificaoPendentes(){
+    public List<Notificavel> getNotificaoPendentes(){
         return notificacoesPendentes;
     }
     
-    public List<Notificacao> getNotificaoEnviadas(){
+    public List<Notificavel> getNotificaoEnviadas(){
         return notificacoesEnviadas;
     }
 
@@ -133,12 +133,12 @@ public class Cliente implements CompararA {
         }
     }
 
-    public void adiconarNotificacao(Notificacao notificao){
+    public void adiconarNotificacao(Notificavel notificao){
         this.notificacoesPendentes.add(notificao);
     }
 
     public void enviarNotificacoes(){
-        for (Notificacao notificacao : notificacoesPendentes){
+        for (Notificavel notificacao : notificacoesPendentes){
             notificacao.notificar();
             notificacoesEnviadas.add(notificacao);
         }

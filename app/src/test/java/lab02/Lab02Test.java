@@ -20,14 +20,14 @@ import lab02.Exceptions.CancelamentoNaoPermitidoException;
 import lab02.Exceptions.EventoNaoEncontradoException;
 import lab02.Exceptions.IngressoEsgotadoException;
 import lab02.Exceptions.IngressoNaoEncontradoException;
-import lab02.Notificacoes.Notificacao;
 import lab02.Notificacoes.NotificacaoEmail;
+import lab02.Notificacoes.Notificavel;
 
 public class Lab02Test {
     @Test
     public void notificar() {
         Cliente daniel = new Cliente("Daniel Franco", "shaolinMatadorDePorco@gmail.com", "4002-8922");
-        Notificacao danielNotificacaoEmail = new NotificacaoEmail(
+        Notificavel danielNotificacaoEmail = new NotificacaoEmail(
             "Houve uma tentativa de login na sua conta recentemente.",
             "Login desconhecido");
 

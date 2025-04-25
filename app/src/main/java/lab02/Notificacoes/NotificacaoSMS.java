@@ -11,12 +11,13 @@ package lab02.Notificacoes;
 /**
  * Representa uma notificação do tipo SMS.
  * 
- * Esta classe estende {@link Notificacao} e implementa o método {@code notificar}
+ * Esta classe implementa a interface {@link Notificavel} e implementa o método {@code notificar}
  * para exibir a mensagem formatada como um SMS no console.
  * 
  * @author Vinícius de Oliveira - 251527
  */
-public class NotificacaoSMS extends Notificacao {
+public class NotificacaoSMS implements Notificavel {
+    private String mensagem;
 
     /**
      * Construtor da notificação por SMS.
@@ -24,7 +25,23 @@ public class NotificacaoSMS extends Notificacao {
      * @param mensagem a mensagem do SMS
      */
     public NotificacaoSMS(String mensagem){
-        super(mensagem);
+        this.mensagem = mensagem;
+    }
+
+    /**
+     * Retorna a mensagem da notificação.
+     * @return a mensagem da notificação
+     */
+    public String getMensagem(){
+        return mensagem;
+    }
+
+    /**
+     * Define uma nova mensagem para a notificação.
+     * @param novaMensagem a nova mensagem a ser definida
+     */
+    public void setMensagem(String novaMensagem){
+        this.mensagem = novaMensagem;
     }
 
     /**
