@@ -1,11 +1,17 @@
 package lab02.Eventos.Caracteristicas;
 
+import java.time.LocalDate;
+
+import lab02.Organizadora;
+
 public class CaracteristicaEventoEmBar extends CaracteristicaDeEvento {
     private String nomeDoBar;
     private String inicioHappyHour;
     private int duracaoHappyHour;
 
-    public CaracteristicaEventoEmBar(String nomeDoBar, String inicioHappyHour, int duracaoHappyHour){
+    public CaracteristicaEventoEmBar(String nome, double precoIngresso, Organizadora organizadora,
+     LocalDate data, String nomeDoBar, String inicioHappyHour, int duracaoHappyHour){
+        super(nome, precoIngresso, organizadora, data);
         this.nomeDoBar = nomeDoBar;
         this.inicioHappyHour = inicioHappyHour;
         this.duracaoHappyHour = duracaoHappyHour;
@@ -21,11 +27,5 @@ public class CaracteristicaEventoEmBar extends CaracteristicaDeEvento {
 
     public int getDuracaoHappyHour(){
         return duracaoHappyHour;
-    }
-
-    @Override
-    public String descricao(){
-        return "Evento no bar: " + nomeDoBar + ", Happy Hour Inicio: " +
-         inicioHappyHour + ", Duração: " + duracaoHappyHour;
     }
 }

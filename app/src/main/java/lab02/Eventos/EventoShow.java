@@ -5,15 +5,9 @@
 
 package lab02.Eventos;
 
-import java.time.LocalDate;
-
-import lab02.Local;
-import lab02.Organizadora;
+import lab02.Eventos.Caracteristicas.CaracteristicaEventoShow;
 
 public class EventoShow extends Evento {
-        
-    private String artista;
-    
     /**
     * Construtor da classe EventocShow
     * @param nome o nome do Evento
@@ -22,28 +16,21 @@ public class EventoShow extends Evento {
     * @param data a data do Evento
     * @param artista o artista do Evento
     */
-    public EventoShow(String nome, double precoIngresso, Organizadora organizadora, LocalDate data, String artista) {
-        super(nome, precoIngresso, organizadora, data);
-        this.artista = artista;
+    public EventoShow(CaracteristicaEventoShow caracteristicas) {
+        super(caracteristicas);
     }
 
     /**
     * Retorna a descrição do Evento
     * @return a descrição do Evento
     */
-    public String getDescricao() {
-        if (this.local != null){
-            return "Show: " + this.nome + " - Artista: " + this.artista  + " - Local: " + this.local.getNome() + " - Data: " + this.data;
+    @Override
+    public String descricao() {
+        CaracteristicaEventoShow caracteristicas = (CaracteristicaEventoShow) super.getCaracteristicas();
+        if (caracteristicas.getLocal() != null){
+            return "Show: " + caracteristicas.getNome() + " - Artista: " + caracteristicas.getArtista()  + " - Local: " + caracteristicas.getLocal().getNome() + " - Data: " + caracteristicas.getData();
         } else {
-            return "Show: " + this.nome + " - Artista: " + this.artista  + " - Local: Indefinido - Data: " + this.data;
+            return "Show: " + caracteristicas.getNome() + " - Artista: " + caracteristicas.getArtista()  + " - Local: Indefinido - Data: " + caracteristicas.getData();
         }
-    }
-    
-    /**
-    * Retorna o preço do Ingresso do Evento
-    * @return o preço do Ingresso do Evento
-    */
-    public double getPrecoIngresso() {
-        return this.precoIngresso;
     }
 }

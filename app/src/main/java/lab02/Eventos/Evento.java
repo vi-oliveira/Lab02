@@ -14,23 +14,18 @@
 package lab02.Eventos;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import lab02.Ingresso;
 import lab02.Local;
 import lab02.Organizadora;
 import lab02.Clientes.Cliente;
+import lab02.Eventos.Caracteristicas.CaracteristicaDeEvento;
 import lab02.Exceptions.EventoNaoEncontradoException;
 import lab02.Exceptions.IngressoEsgotadoException;
 
 public abstract class Evento {
-    protected String nome;
-    protected Local local;
-    protected double precoIngresso; // preço base do ingresso
-    protected Organizadora organizadora;
-    protected LocalDate data;
-    private List<Ingresso> ingressosVendidos;
+    protected CaracteristicaDeEvento caracteristicas;
 
     /**
      * Construtor da classe Evento
@@ -39,21 +34,16 @@ public abstract class Evento {
      * @param organizadora a organizadora do Evento
      * @param data a data do Evento
      */
-    public Evento(String nome, double precoIngresso, Organizadora organizadora, LocalDate data) {
-        this.nome = nome;
-        this.local = null;
-        this.precoIngresso = precoIngresso; // modificar para representar o preço base do ingresso
-        this.organizadora = organizadora;
-        this.data = data;
-        this.ingressosVendidos = new ArrayList<Ingresso>();
+    public Evento(CaracteristicaDeEvento caracteristicas) {
+        this.caracteristicas = caracteristicas;
     }
 
-    /**
+        /**
      * Retorna o nome do Evento
      * @return o nome do Evento
      */
     public String getNome(){
-        return nome;
+        return caracteristicas.getNome();
     }
 
     /**
@@ -61,7 +51,7 @@ public abstract class Evento {
      * @param nome o novo nome do Evento
      */
     public void setNome(String nome){
-        this.nome = nome;
+        this.caracteristicas.setNome(nome);
     }
 
     /**
@@ -69,7 +59,7 @@ public abstract class Evento {
      * @return o local do Evento
      */
     public Local getLocal() {
-        return local;
+        return caracteristicas.getLocal();
     }
 
     /**
@@ -77,7 +67,7 @@ public abstract class Evento {
      * @param local o novo local do Evento
      */
     public void setLocal(Local local) {
-        this.local = local;
+        this.caracteristicas.setLocal(local);
     }
 
     /**
@@ -85,7 +75,7 @@ public abstract class Evento {
      * @return o precoIngresso do Evento
      */
     public double getPrecoIngresso(){
-        return this.precoIngresso;
+        return caracteristicas.getPrecoIngresso();
     }
 
     /**
@@ -93,11 +83,15 @@ public abstract class Evento {
      * @param precoIngresso o novo precoIngresso do Evento
      */
     public void setPrecoIngresso(double precoIngresso){
-        this.precoIngresso = precoIngresso;
+        this.caracteristicas.setPrecoIngresso(precoIngresso);
     }
 
-    public String descricao(){
-        return "Evento: " + this.nome + " - Local: " + this.local;
+    public CaracteristicaDeEvento getCaracteristicas(){
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(CaracteristicaDeEvento caracteristicas){
+        this.caracteristicas = caracteristicas;
     }
 
     /**
@@ -105,7 +99,7 @@ public abstract class Evento {
      * @return a data do Evento
      */
     public LocalDate getData() {
-        return data;
+        return caracteristicas.getData();
     }
 
     /**
@@ -113,7 +107,7 @@ public abstract class Evento {
      * @return a a lista de ingressos vendidos
      */
     public List<Ingresso> getIngressosVendidos(){
-        return ingressosVendidos;
+        return caracteristicas.getIngressosVendidos();
     }
 
     /**
@@ -121,7 +115,11 @@ public abstract class Evento {
      * @return a organizadora do Evento
      */
     public Organizadora getOrganizadora(){
-        return this.organizadora;
+        return caracteristicas.getOrganizadora();
+    }
+    
+    public String descricao(){
+        return "Evento: " + this.caracteristicas.getNome() + " - Local: " + this.caracteristicas.getLocal().getNome();
     }
 
     /**
@@ -132,13 +130,13 @@ public abstract class Evento {
      * é lançado o erro de ingresso esgotado
      */
     public void venderIngresso(Cliente cliente, Ingresso ingresso) throws IngressoEsgotadoException, EventoNaoEncontradoException {
-        if (ingressosVendidos.size() + 1 > this.local.getCapacidade()){
+        if (this.caracteristicas.getIngressosVendidos().size() + 1 > this.caracteristicas.getLocal().getCapacidade()){
             throw new IngressoEsgotadoException("Os ingressos esgotaram");
         }
         if (!(ingresso.getEvento().equals(this))){
             throw new EventoNaoEncontradoException("O evento do ingresso e o evento fornecido são diferentes: " + ingresso.getEvento().getNome() + " != " + this.getNome());
         }
-        this.ingressosVendidos.add(ingresso);
+        this.caracteristicas.getIngressosVendidos().add(ingresso);
         cliente.adicionarIngresso(ingresso);
     }
 
@@ -150,7 +148,7 @@ public abstract class Evento {
      * é lançado o erro de ingresso esgotado
      */
     public void venderIngresso(Cliente cliente, List<Ingresso> ingressos) throws IngressoEsgotadoException, EventoNaoEncontradoException {
-        if (ingressosVendidos.size() + ingressos.size() > this.local.getCapacidade()){
+        if (this.caracteristicas.getIngressosVendidos().size() + ingressos.size() > this.caracteristicas.getLocal().getCapacidade()){
             throw new IngressoEsgotadoException("Os ingressos esgotaram");
         }
         for (Ingresso ingresso : ingressos){
@@ -158,7 +156,7 @@ public abstract class Evento {
                 throw new EventoNaoEncontradoException("O evento de algum ingresso e o evento fornecido são diferentes (Nenhum ingresso vendido)");
             }
         }
-        this.ingressosVendidos.addAll(ingressos);
+        this.caracteristicas.getIngressosVendidos().addAll(ingressos);
         cliente.adicionarIngresso(ingressos);
     }
 }

@@ -17,7 +17,10 @@ import lab02.Eventos.EventoMusicaAoVivo;
 import lab02.Eventos.EventoShow;
 import lab02.Eventos.HistoricoEventos;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoEmBar;
+import lab02.Eventos.Caracteristicas.CaracteristicaEventoFestival;
+import lab02.Eventos.Caracteristicas.CaracteristicaEventoJogo;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoMusicaAoVivo;
+import lab02.Eventos.Caracteristicas.CaracteristicaEventoShow;
 
 /**
  * Contém a estrutura de implementação de uma organizadora.
@@ -86,7 +89,8 @@ public class Organizadora {
     */
     public EventoShow criarEvento(String nome, double precoIngresso,
     LocalDate data, String artista, HistoricoEventos historico){
-        EventoShow eventoCriado = new EventoShow(nome, precoIngresso, this, data, artista);
+        CaracteristicaEventoShow caracteristicas = new CaracteristicaEventoShow(nome, precoIngresso, this, data, artista);
+        EventoShow eventoCriado = new EventoShow(caracteristicas);
         eventosOrganizados.add(eventoCriado);
         historico.adicionarEvento(eventoCriado);
         return eventoCriado;
@@ -104,7 +108,8 @@ public class Organizadora {
     */
     public EventoFestival criarEvento(String nome, double precoIngresso,
     LocalDate data, List<String> lineup, int duracao, HistoricoEventos historico){
-        EventoFestival eventoCriado = new EventoFestival(nome, precoIngresso, this, data, lineup, duracao);
+        CaracteristicaEventoFestival caracteristicas = new CaracteristicaEventoFestival(nome, precoIngresso, this, data, lineup, duracao);
+        EventoFestival eventoCriado = new EventoFestival(caracteristicas);
         eventosOrganizados.add(eventoCriado);
         historico.adicionarEvento(eventoCriado);
         return eventoCriado;
@@ -120,8 +125,9 @@ public class Organizadora {
     * @return o evento criado
     */
     public EventoJogo criarEvento(String nome, double precoIngresso,
-    LocalDate data, List<String> times,HistoricoEventos historico){
-        EventoJogo eventoCriado = new EventoJogo(nome, precoIngresso, this, data, times);
+    LocalDate data, List<String> times, HistoricoEventos historico){
+        CaracteristicaEventoJogo caracteristicas = new CaracteristicaEventoJogo(nome, precoIngresso, this, data, times);
+        EventoJogo eventoCriado = new EventoJogo(caracteristicas);
         eventosOrganizados.add(eventoCriado);
         historico.adicionarEvento(eventoCriado);
         return eventoCriado;
@@ -136,9 +142,10 @@ public class Organizadora {
     * @param historico o historico que contém todos os eventos
     * @return o evento criado
     */
-    public EventoEmBar criarEvento(String nome, double precoIngresso,
-    LocalDate data, CaracteristicaEventoEmBar caracteristicas, HistoricoEventos historico){
-        EventoEmBar eventoCriado = new EventoEmBar(nome, precoIngresso, this, data, caracteristicas);
+    public EventoEmBar criarEvento(String nome, double precoIngresso, LocalDate data, String nomeDoBar,
+    String inicioHappyHour, int duracaoHappyHour, HistoricoEventos historico){
+        CaracteristicaEventoEmBar caracteristicas = new CaracteristicaEventoEmBar(nome, precoIngresso, this, data, nomeDoBar, inicioHappyHour, duracaoHappyHour);
+        EventoEmBar eventoCriado = new EventoEmBar(caracteristicas);
         eventosOrganizados.add(eventoCriado);
         historico.adicionarEvento(eventoCriado);
         return eventoCriado;
@@ -154,8 +161,9 @@ public class Organizadora {
     * @return o evento criado
     */
     public EventoMusicaAoVivo criarEvento(String nome, double precoIngresso,
-    LocalDate data, CaracteristicaEventoMusicaAoVivo caracteristicas, HistoricoEventos historico){
-        EventoMusicaAoVivo eventoCriado = new EventoMusicaAoVivo(nome, precoIngresso, this, data, caracteristicas);
+    LocalDate data, String nomeDoArtista, String generoMusical, HistoricoEventos historico){
+        CaracteristicaEventoMusicaAoVivo caracteristicas = new CaracteristicaEventoMusicaAoVivo(nome, precoIngresso, this, data, nomeDoArtista, generoMusical);
+        EventoMusicaAoVivo eventoCriado = new EventoMusicaAoVivo(caracteristicas);
         eventosOrganizados.add(eventoCriado);
         historico.adicionarEvento(eventoCriado);
         return eventoCriado;

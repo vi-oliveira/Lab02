@@ -4,16 +4,10 @@
 
 package lab02.Eventos;
 
-import java.time.LocalDate;
-import java.util.List;
+import lab02.Eventos.Caracteristicas.CaracteristicaEventoFestival;
 
-import lab02.Organizadora;
+public class EventoFestival extends Evento implements Duravel {     
 
-public class EventoFestival extends Evento implements Duravel {
-        
-    private List<String> lineup;
-    private int duracao;
-    
     /**
     * Construtor da classe EventoFestival
     * @param nome o nome do Evento
@@ -21,18 +15,8 @@ public class EventoFestival extends Evento implements Duravel {
     * @param dataInicio a data de início do Festival
     * @param dataFim a data de fim do Festival
     */
-    public EventoFestival(String nome, double precoIngresso, Organizadora organizadora, LocalDate data, List<String> lineup, int duracao) {
-        super(nome, precoIngresso, organizadora, data);
-        this.lineup = lineup;
-        this.duracao = duracao;
-    }
-
-    /**
-    * Retorna a lista com os nomes dos artistas que se apresentarão no Festival
-    * @return a lista com os nomes dos artistas do Festival
-    */
-    public List<String> getLineup() {
-        return this.lineup;
+    public EventoFestival(CaracteristicaEventoFestival caracteristicas) {
+        super(caracteristicas);
     }
     
     /**
@@ -40,7 +24,8 @@ public class EventoFestival extends Evento implements Duravel {
     * @return a dura o do Festival
     */
     public int getDuracao() {
-        return this.duracao;
+        CaracteristicaEventoFestival caracteristicas = (CaracteristicaEventoFestival) super.getCaracteristicas();
+        return caracteristicas.getDuracao();
     }
 
 
@@ -48,20 +33,13 @@ public class EventoFestival extends Evento implements Duravel {
      * Retorna uma string contendo a descri o do Festival, com seu nome, lineup, local e dura o
      * @return uma string com a descri o do Festival
      */
-    public String descricao() {
-        if (this.local != null){
-            return "Festival: " + this.nome + " - Lineup: " + this.lineup + " - Local: " + this.local.getNome() + " - Duração: " + this.duracao;
-        } else {
-            return "Festival: " + this.nome + " - Lineup: " + this.lineup + " - Local: Indefinido - Duração: " + this.duracao;
-        }
-    }
-
-    /**
-    * Retorna o preço do Ingresso do Evento
-    * @return o preço do Ingresso do Evento
-    */
     @Override
-    public double getPrecoIngresso() {
-        return this.precoIngresso;
+    public String descricao() {
+        CaracteristicaEventoFestival caracteristicas = (CaracteristicaEventoFestival) super.getCaracteristicas();
+        if (caracteristicas.getLocal() != null){
+            return "Festival: " + caracteristicas.getNome() + " - Lineup: " + caracteristicas.getLineup() + " - Local: " + caracteristicas.getLocal().getNome() + " - Duração: " + caracteristicas.getDuracao();
+        } else {
+            return "Festival: " + caracteristicas.getNome() + " - Lineup: " + caracteristicas.getLineup() + " - Local: Indefinido - Duração: " + caracteristicas.getDuracao();
+        }
     }
 }

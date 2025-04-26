@@ -15,7 +15,6 @@ import lab02.Eventos.Evento;
 import lab02.Eventos.EventoEmBar;
 import lab02.Eventos.EventoShow;
 import lab02.Eventos.HistoricoEventos;
-import lab02.Eventos.Caracteristicas.CaracteristicaEventoEmBar;
 import lab02.Exceptions.CancelamentoNaoPermitidoException;
 import lab02.Exceptions.EventoNaoEncontradoException;
 import lab02.Exceptions.IngressoEsgotadoException;
@@ -78,9 +77,8 @@ public class Lab02Test {
         Organizadora javaEventos = new Organizadora("Java Eventos ltda",
         12345678, "Rua que brilha nº123");
 
-        CaracteristicaEventoEmBar caracteristicasBar = new CaracteristicaEventoEmBar(barzinho.getNome(), "22:00", 2);
         EventoEmBar eventoBar = javaEventos.criarEvento("SUPER BAR",
-        20, LocalDate.of(2025, 12, 14), caracteristicasBar, historico);
+        20, LocalDate.of(2025, 12, 14), barzinho.getNome(), "22:00", 2, historico);
         try {
             barzinho.alocarParaEvento(eventoBar);
         } catch (Exception e) {
@@ -88,7 +86,7 @@ public class Lab02Test {
         }
 
         String descricaoEsperada = "Evento no bar: Bar Tolomeu, Happy Hour Inicio: 22:00, Duração: 2";
-        String descricaoBar = eventoBar.getCaracteristicas().descricao();
+        String descricaoBar = eventoBar.descricao();
 
         assertEquals(descricaoEsperada, descricaoBar);
         

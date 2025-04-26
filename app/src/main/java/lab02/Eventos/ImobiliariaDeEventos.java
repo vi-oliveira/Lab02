@@ -12,11 +12,9 @@ import java.util.List;
 import lab02.Local;
 import lab02.Exceptions.LocalNaoEncontradoException;
 
-public class ImobiliariaDeEventos {
-    
+public class ImobiliariaDeEventos {    
     private List<Local> locais;
     private String nome;
-
 
     /**
      * Construtor da classe ImobiliariaDeEventos
@@ -25,6 +23,14 @@ public class ImobiliariaDeEventos {
     public ImobiliariaDeEventos(String nome) {
         this.nome = nome;
         this.locais = new ArrayList<Local>();
+    }
+
+    /**
+     * Retorna o nome do Evento
+     * @return o nome do Evento
+     */
+    public String getNome(){
+        return nome;
     }
 
     /**

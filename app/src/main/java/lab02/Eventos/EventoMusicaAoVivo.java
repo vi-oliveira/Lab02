@@ -1,20 +1,15 @@
 package lab02.Eventos;
 
-import java.time.LocalDate;
-
-import lab02.Organizadora;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoMusicaAoVivo;
 
-public class EventoMusicaAoVivo extends Evento {
-    private CaracteristicaEventoMusicaAoVivo caracteristicas;
-    
-    public EventoMusicaAoVivo(String nome, double precoIngresso, Organizadora organizadora,
-     LocalDate data, CaracteristicaEventoMusicaAoVivo caracteristicas){
-        super(nome, precoIngresso, organizadora, data);
-        this.caracteristicas = caracteristicas;
+public class EventoMusicaAoVivo extends Evento {    
+    public EventoMusicaAoVivo(CaracteristicaEventoMusicaAoVivo caracteristicas){
+        super(caracteristicas);
     }
 
-    public CaracteristicaEventoMusicaAoVivo getCaracteristicas(){
-        return caracteristicas;
+    @Override
+    public String descricao(){
+        CaracteristicaEventoMusicaAoVivo caracteristicas = (CaracteristicaEventoMusicaAoVivo) super.getCaracteristicas();
+        return "Música ao vivo com " + caracteristicas.getNomeDoArtista() + " (" + caracteristicas.getGeneroMusical() + ")";
     }
 }

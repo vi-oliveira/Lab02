@@ -319,9 +319,8 @@ public class App {
 
         // DEMONSTRAÇÃO PASSO 7:
         System.out.println("\nDEMONSTRAÇÃO DA COMPOSIÇÃO:");
-        CaracteristicaEventoEmBar caracteristicasBar = new CaracteristicaEventoEmBar("Bar Tolomeu", "22:00", 2);
         EventoEmBar eventoBar = superEventos.criarEvento("SUPER BAR",
-        20, LocalDate.of(2025, 12, 14), caracteristicasBar, historico);
+        20, LocalDate.of(2025, 12, 14), "Bar Tolomeu", "22:00", 2, historico);
         Local barzinho = new Local("Bar Tolomeu", 10);
         try {
             barzinho.alocarParaEvento(eventoBar);
@@ -330,6 +329,7 @@ public class App {
         }
 
         System.out.println("Evento bar: " + eventoBar.getNome());
-        System.out.println("Nome do bar: " + eventoBar.getCaracteristicas().getNomeDoBar());
+        CaracteristicaEventoEmBar caracteristicasBar = (CaracteristicaEventoEmBar) eventoBar.getCaracteristicas();
+        System.out.println("Nome do bar: " + caracteristicasBar.getNomeDoBar());
     }
 }
