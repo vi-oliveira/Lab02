@@ -117,6 +117,34 @@ public class Lab02Test {
         assertEquals(descricaoEsperada, descricaoBar);
         
     }
+    
+    @Test
+    public void novaHierarquia(){
+        Local teatroArena = new Local("Teatro de Arena", 100);
+
+        HistoricoEventos historico = new HistoricoEventos();
+
+        Organizadora javaEventos = new Organizadora("Java Eventos ltda",
+        12345678, "Rua que brilha nº123");
+        
+        EventoShow showGoogle = javaEventos.criarEvento("Músicas IA",
+        150, LocalDate.of(2025, 7, 1), "Chat Gemini", historico);
+
+        EventoShow showLinux = javaEventos.criarEvento("Músicas OS",
+        0, LocalDate.of(2025, 7, 2), "Tux", historico);
+
+        try{
+            teatroArena.alocarParaEvento(showGoogle);
+            teatroArena.alocarParaEvento(showLinux);
+        } catch (Exception e){}
+
+        List<String> lineup = new ArrayList<String>(Arrays.asList("Chat Gemini", "Tux"));
+
+        List<EventoShow> shows = new ArrayList<EventoShow>(Arrays.asList(showGoogle, showLinux));
+        EventoFestivalDeShows festivalDeShows = javaEventos.criarEvento("Paloozalolla", 1000, LocalDate.of(2025, 7, 1), lineup, 2, shows, historico);
+
+        assertEquals(2, festivalDeShows.getShows().size());
+    }
 
     @Test
     public void tratamentoCancelamentoNaoPermitido(){
@@ -161,34 +189,6 @@ public class Lab02Test {
         }
 
         assertEquals(mensagemDeErroEsperada, mensagemDeErroRecebida);
-    }
-
-    @Test
-    public void novaHierarquia(){
-        Local teatroArena = new Local("Teatro de Arena", 100);
-
-        HistoricoEventos historico = new HistoricoEventos();
-
-        Organizadora javaEventos = new Organizadora("Java Eventos ltda",
-        12345678, "Rua que brilha nº123");
-        
-        EventoShow showGoogle = javaEventos.criarEvento("Músicas IA",
-        150, LocalDate.of(2025, 7, 1), "Chat Gemini", historico);
-
-        EventoShow showLinux = javaEventos.criarEvento("Músicas OS",
-        0, LocalDate.of(2025, 7, 2), "Tux", historico);
-
-        try{
-            teatroArena.alocarParaEvento(showGoogle);
-            teatroArena.alocarParaEvento(showLinux);
-        } catch (Exception e){}
-
-        List<String> lineup = new ArrayList<String>(Arrays.asList("Chat Gemini", "Tux"));
-
-        List<EventoShow> shows = new ArrayList<EventoShow>(Arrays.asList(showGoogle, showLinux));
-        EventoFestivalDeShows festivalDeShows = javaEventos.criarEvento("Paloozalolla", 1000, LocalDate.of(2025, 7, 1), lineup, 2, shows, historico);
-
-        assertEquals(2, festivalDeShows.getShows().size());
     }
 
     @Test
