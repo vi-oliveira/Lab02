@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import lab02.Clientes.Cliente;
 import lab02.Eventos.Evento;
 import lab02.Eventos.EventoEmBar;
+import lab02.Eventos.EventoFestivalDeShows;
+import lab02.Eventos.EventoMusicaAoVivo;
 import lab02.Eventos.EventoShow;
 import lab02.Eventos.HistoricoEventos;
 import lab02.Exceptions.CancelamentoNaoPermitidoException;
@@ -93,6 +95,30 @@ public class Lab02Test {
     }
 
     @Test
+    public void testarEventoMusicaAoVivo(){
+        Local palco = new Local("Mega Palco", 200);
+
+        HistoricoEventos historico = new HistoricoEventos();
+
+        Organizadora javaEventos = new Organizadora("Java Eventos ltda",
+        12345678, "Rua que brilha nº123");
+
+        EventoMusicaAoVivo eventoMusica = javaEventos.criarEvento("Músicas legais",
+        500, LocalDate.of(2026, 3, 19), "Elvis", "Rock", historico);
+        try {
+            palco.alocarParaEvento(eventoMusica);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        String descricaoEsperada = "Música ao vivo com Elvis (Rock)";
+        String descricaoBar = eventoMusica.descricao();
+
+        assertEquals(descricaoEsperada, descricaoBar);
+        
+    }
+
+    @Test
     public void tratamentoCancelamentoNaoPermitido(){
         Local teatroArena = new Local("Teatro de Arena", 100);
 
@@ -138,6 +164,34 @@ public class Lab02Test {
     }
 
     @Test
+    public void novaHierarquia(){
+        Local teatroArena = new Local("Teatro de Arena", 100);
+
+        HistoricoEventos historico = new HistoricoEventos();
+
+        Organizadora javaEventos = new Organizadora("Java Eventos ltda",
+        12345678, "Rua que brilha nº123");
+        
+        EventoShow showGoogle = javaEventos.criarEvento("Músicas IA",
+        150, LocalDate.of(2025, 7, 1), "Chat Gemini", historico);
+
+        EventoShow showLinux = javaEventos.criarEvento("Músicas OS",
+        0, LocalDate.of(2025, 7, 2), "Tux", historico);
+
+        try{
+            teatroArena.alocarParaEvento(showGoogle);
+            teatroArena.alocarParaEvento(showLinux);
+        } catch (Exception e){}
+
+        List<String> lineup = new ArrayList<String>(Arrays.asList("Chat Gemini", "Tux"));
+
+        List<EventoShow> shows = new ArrayList<EventoShow>(Arrays.asList(showGoogle, showLinux));
+        EventoFestivalDeShows festivalDeShows = javaEventos.criarEvento("Paloozalolla", 1000, LocalDate.of(2025, 7, 1), lineup, 2, shows, historico);
+
+        assertEquals(2, festivalDeShows.getShows().size());
+    }
+
+    @Test
     public void tratamentoEventoNaoEncontradoUmIngresso(){
         Local teatroArena = new Local("Teatro de Arena", 100);
 
@@ -150,7 +204,7 @@ public class Lab02Test {
         150, LocalDate.of(2025, 12, 14), "Chat Gemini", historico);
 
         EventoShow showLinux = javaEventos.criarEvento("Músicas OS",
-        0, LocalDate.of(2025, 12, 15), "Chat Gemini", historico);
+        0, LocalDate.of(2025, 12, 15), "Tux", historico);
         
         try{
             teatroArena.alocarParaEvento(showGoogle);
@@ -188,7 +242,7 @@ public class Lab02Test {
         150, LocalDate.of(2025, 12, 14), "Chat Gemini", historico);
 
         EventoShow showLinux = javaEventos.criarEvento("Músicas OS",
-        0, LocalDate.of(2025, 12, 15), "Chat Gemini", historico);
+        0, LocalDate.of(2025, 12, 15), "Tux", historico);
         
         try{
             teatroArena.alocarParaEvento(showGoogle);

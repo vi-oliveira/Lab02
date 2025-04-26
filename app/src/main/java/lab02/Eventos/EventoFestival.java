@@ -7,7 +7,6 @@ package lab02.Eventos;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoFestival;
 
 public class EventoFestival extends Evento implements Duravel {     
-
     /**
     * Construtor da classe EventoFestival
     * @param nome o nome do Evento

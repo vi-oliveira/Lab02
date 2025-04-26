@@ -12,12 +12,14 @@ import java.util.List;
 import lab02.Eventos.Evento;
 import lab02.Eventos.EventoEmBar;
 import lab02.Eventos.EventoFestival;
+import lab02.Eventos.EventoFestivalDeShows;
 import lab02.Eventos.EventoJogo;
 import lab02.Eventos.EventoMusicaAoVivo;
 import lab02.Eventos.EventoShow;
 import lab02.Eventos.HistoricoEventos;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoEmBar;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoFestival;
+import lab02.Eventos.Caracteristicas.CaracteristicaEventoFestivalDeShows;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoJogo;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoMusicaAoVivo;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoShow;
@@ -110,6 +112,26 @@ public class Organizadora {
     LocalDate data, List<String> lineup, int duracao, HistoricoEventos historico){
         CaracteristicaEventoFestival caracteristicas = new CaracteristicaEventoFestival(nome, precoIngresso, this, data, lineup, duracao);
         EventoFestival eventoCriado = new EventoFestival(caracteristicas);
+        eventosOrganizados.add(eventoCriado);
+        historico.adicionarEvento(eventoCriado);
+        return eventoCriado;
+    }
+
+    /**
+    * Criador de eventos organizados por esta organizadora
+    * @param nome o nome do Evento
+    * @param precoIngresso o preço do Ingresso do Evento
+    * @param data a data do Evento
+    * @param lineup o lineup do festival
+    * @param duracao a duracao do Evento
+    * @param historico o historico que contém todos os eventos
+    * @return o evento criado
+    */
+    public EventoFestivalDeShows criarEvento(String nome, double precoIngresso,
+    LocalDate data, List<String> lineup, int duracao, List<EventoShow> shows, HistoricoEventos historico){
+        CaracteristicaEventoFestival caracteristicas = new CaracteristicaEventoFestival(nome, precoIngresso, this, data, lineup, duracao);
+        CaracteristicaEventoFestivalDeShows caracteristicasShows = new CaracteristicaEventoFestivalDeShows(shows);
+        EventoFestivalDeShows eventoCriado = new EventoFestivalDeShows(caracteristicas, caracteristicasShows);
         eventosOrganizados.add(eventoCriado);
         historico.adicionarEvento(eventoCriado);
         return eventoCriado;
