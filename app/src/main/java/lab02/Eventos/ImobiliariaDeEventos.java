@@ -12,6 +12,11 @@ import java.util.List;
 import lab02.Local;
 import lab02.Exceptions.LocalNaoEncontradoException;
 
+/**
+ * Classe que representa uma imobiliária de eventos
+ * 
+ * @author Vinícius de Oliveira - 251527
+ */
 public class ImobiliariaDeEventos {    
     private List<Local> locais;
     private String nome;
@@ -26,8 +31,8 @@ public class ImobiliariaDeEventos {
     }
 
     /**
-     * Retorna o nome do Evento
-     * @return o nome do Evento
+     * Retorna o nome da imobiliária
+     * @return o nome da imobiliária
      */
     public String getNome(){
         return nome;
@@ -54,7 +59,8 @@ public class ImobiliariaDeEventos {
                 return local;
             }
         }
-        throw new LocalNaoEncontradoException("O local especificado não foi encontrado");
+        throw new LocalNaoEncontradoException(
+            "O local especificado não foi encontrado");
     }
     
     /**
@@ -73,7 +79,8 @@ public class ImobiliariaDeEventos {
         if (!locaisEncontrados.isEmpty()){
             return locaisEncontrados;
         } else{
-            throw new LocalNaoEncontradoException("Nenhum local foi encontrado");
+            throw new LocalNaoEncontradoException(
+                "Nenhum local foi encontrado");
         }
     }
 }

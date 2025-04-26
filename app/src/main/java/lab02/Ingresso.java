@@ -18,8 +18,8 @@ public class Ingresso {
 
     /**
      * Construtor da classe Ingresso
-     * @param preco o preço do Ingresso
      * @param evento o evento associado ao Ingresso
+     * @param preco o preço do Ingresso
      */
     public Ingresso(Evento evento, double preco) {
         this.evento = evento;

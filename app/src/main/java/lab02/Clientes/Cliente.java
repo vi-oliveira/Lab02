@@ -1,5 +1,10 @@
 /*
+ * Cliente.java
+ * 
  * Material usado na disciplina MC322 - Programação orientada a objetos.
+ * 
+ * A documentação para javadoc de alguns métodos deste arquivo foi
+ * feita com o uso do ChatGPT e posteriormente revisada e/ou corrigida.
  */
 package lab02.Clientes;
 
@@ -15,6 +20,14 @@ import lab02.Exceptions.CancelamentoNaoPermitidoException;
 import lab02.Exceptions.IngressoNaoEncontradoException;
 import lab02.Notificacoes.Notificavel;
 
+/**
+ * Representa um cliente que pode comprar ingressos para eventos e receber notificações.
+ * 
+ * Um cliente possui nome, e-mail, telefone, uma lista de ingressos adquiridos e
+ * listas de notificações pendentes e enviadas.
+ * 
+ * @author Vinícius de Oliveira - 251527
+ */
 public class Cliente implements CompararA {
     private String nome;
     private String email;
@@ -27,6 +40,7 @@ public class Cliente implements CompararA {
      * Construtor da classe cliente
      * @param nome o nome do cliente
      * @param email o email do cliente
+     * @param telefone o telefone do cliente
      */
     public Cliente(String nome, String email, String telefone){
         this.nome = nome;
@@ -46,7 +60,7 @@ public class Cliente implements CompararA {
     }
 
     /**
-     * Altera o nome do evento para `nome` 
+     * Altera o nome do cliente para `nome` 
      * @param nome o novo nome do cliente
      */
     public void setNome(String nome){
@@ -68,14 +82,26 @@ public class Cliente implements CompararA {
     public void setEmail(String email){
         this.email = email;
     }
-
+    
+    /**
+     * Retorna o telefone do cliente
+     * @return o telefone do cliente
+     */
     public String getTelefone(){
         return telefone;
+    }
+    
+    /**
+     * Altera o telefone do cliente para `telefone` 
+     * @param telefone o novo telefone do cliente
+     */
+    public void setTelefone(String telefone){
+        this.telefone = telefone;
     }
 
     /**
      * Adiciona um ingresso à lista;
-     * @param ingressooO ingresso a ser adicionado.
+     * @param ingresso ingresso a ser adicionado.
      */
     public void adicionarIngresso(Ingresso ingresso){
         this.ingressos.add(ingresso);
@@ -105,10 +131,18 @@ public class Cliente implements CompararA {
         return ingressos;
     }
 
+    /**
+     * Retorna a lista de notificações pendentes.
+     * @return lista de notificações pendentes.
+     */
     public List<Notificavel> getNotificaoPendentes(){
         return notificacoesPendentes;
     }
     
+    /**
+     * Retorna a lista de notificações enviadas.
+     * @return lista de notificações enviadas.
+     */
     public List<Notificavel> getNotificaoEnviadas(){
         return notificacoesEnviadas;
     }
@@ -118,25 +152,45 @@ public class Cliente implements CompararA {
      * Um ingresso só será removido com até 24 horas de antecedência
      * do início do evento. Caso contrário, será lançada uma exceção.
      * @param ingresso o ingresso a ser removido dos ingressos.
-     * @throws IngressoNaoEncontradoException Exceção para quando o ingresso não foi comprado pelo cliente
-     * @throws CancelamentoNaoPermitidoException Exceção para quando a data limite para o cancelamento do ingresso já foi ultrapassada
+     * @throws IngressoNaoEncontradoException Exceção para quando o
+     * ingresso não foi comprado pelo cliente
+     * @throws CancelamentoNaoPermitidoException Exceção para quando a
+     * data limite para o cancelamento do ingresso já foi ultrapassada
      */
-    public void cancelarIngresso(Ingresso ingresso) throws IngressoNaoEncontradoException, CancelamentoNaoPermitidoException {
+    public void cancelarIngresso(Ingresso ingresso)
+    throws IngressoNaoEncontradoException, CancelamentoNaoPermitidoException {
         if (ingressos.contains(ingresso)){
-            LocalDate dataLimiteCancelamento = ingresso.getEvento().getData().minusDays(2);
+            LocalDate dataLimiteCancelamento =
+            ingresso.getEvento()
+            .getData()
+            .minusDays(2);
+
             if (LocalDate.now().isAfter(dataLimiteCancelamento)){
-                throw new CancelamentoNaoPermitidoException("A data limite para o cancelamento já foi ultrapassada");
+                throw new CancelamentoNaoPermitidoException(
+                    "A data limite para o cancelamento já foi ultrapassada");
             }
             ingressos.remove(ingresso);
+
         } else {
-            throw new IngressoNaoEncontradoException("O ingresso não foi encontrado");
+            throw new IngressoNaoEncontradoException(
+                "O ingresso não foi encontrado");
         }
     }
 
-    public void adiconarNotificacao(Notificavel notificao){
-        this.notificacoesPendentes.add(notificao);
+    /**
+     * Adiciona uma nova notificação à lista de notificações pendentes do cliente.
+     *
+     * @param notificacao a notificação a ser adicionada
+     */
+    public void adiconarNotificacao(Notificavel notificacao){
+        this.notificacoesPendentes.add(notificacao);
     }
 
+    /**
+     * Envia todas as notificações pendentes para o cliente.
+     * 
+     * Após o envio, as notificações são movidas para a lista de notificações enviadas.
+     */
     public void enviarNotificacoes(){
         for (Notificavel notificacao : notificacoesPendentes){
             notificacao.notificar();
@@ -145,6 +199,13 @@ public class Cliente implements CompararA {
         notificacoesPendentes.clear();
     }
 
+    /**
+     * Compara este cliente com outro cliente e identifica os eventos em comum
+     * baseados nos ingressos adquiridos.
+     *
+     * @param outroCliente o outro cliente a ser comparado
+     * @return um conjunto de eventos que ambos os clientes possuem ingressos
+     */
     public Set<Evento> compararA(Cliente outroCliente){
         Set<Evento> eventosEmComum = new HashSet<Evento>();
 

@@ -91,7 +91,8 @@ public class Organizadora {
     */
     public EventoShow criarEvento(String nome, double precoIngresso,
     LocalDate data, String artista, HistoricoEventos historico){
-        CaracteristicaEventoShow caracteristicas = new CaracteristicaEventoShow(nome, precoIngresso, this, data, artista);
+        CaracteristicaEventoShow caracteristicas = new CaracteristicaEventoShow(
+            nome, precoIngresso, this, data, artista);
         EventoShow eventoCriado = new EventoShow(caracteristicas);
         eventosOrganizados.add(eventoCriado);
         historico.adicionarEvento(eventoCriado);
@@ -110,7 +111,8 @@ public class Organizadora {
     */
     public EventoFestival criarEvento(String nome, double precoIngresso,
     LocalDate data, List<String> lineup, int duracao, HistoricoEventos historico){
-        CaracteristicaEventoFestival caracteristicas = new CaracteristicaEventoFestival(nome, precoIngresso, this, data, lineup, duracao);
+        CaracteristicaEventoFestival caracteristicas = new CaracteristicaEventoFestival(
+            nome, precoIngresso, this, data, lineup, duracao);
         EventoFestival eventoCriado = new EventoFestival(caracteristicas);
         eventosOrganizados.add(eventoCriado);
         historico.adicionarEvento(eventoCriado);
@@ -124,12 +126,14 @@ public class Organizadora {
     * @param data a data do Evento
     * @param lineup o lineup do festival
     * @param duracao a duracao do Evento
+    * @param shows a lista de shows do festival
     * @param historico o historico que contém todos os eventos
     * @return o evento criado
     */
     public EventoFestivalDeShows criarEvento(String nome, double precoIngresso,
     LocalDate data, List<String> lineup, int duracao, List<EventoShow> shows, HistoricoEventos historico){
-        CaracteristicaEventoFestival caracteristicas = new CaracteristicaEventoFestival(nome, precoIngresso, this, data, lineup, duracao);
+        CaracteristicaEventoFestival caracteristicas = new CaracteristicaEventoFestival(
+            nome, precoIngresso, this, data, lineup, duracao);
         CaracteristicaEventoFestivalDeShows caracteristicasShows = new CaracteristicaEventoFestivalDeShows(shows);
         EventoFestivalDeShows eventoCriado = new EventoFestivalDeShows(caracteristicas, caracteristicasShows);
         eventosOrganizados.add(eventoCriado);
@@ -148,7 +152,8 @@ public class Organizadora {
     */
     public EventoJogo criarEvento(String nome, double precoIngresso,
     LocalDate data, List<String> times, HistoricoEventos historico){
-        CaracteristicaEventoJogo caracteristicas = new CaracteristicaEventoJogo(nome, precoIngresso, this, data, times);
+        CaracteristicaEventoJogo caracteristicas = new CaracteristicaEventoJogo(
+            nome, precoIngresso, this, data, times);
         EventoJogo eventoCriado = new EventoJogo(caracteristicas);
         eventosOrganizados.add(eventoCriado);
         historico.adicionarEvento(eventoCriado);
@@ -160,7 +165,9 @@ public class Organizadora {
     * @param nome o nome do Evento
     * @param precoIngresso o preço do Ingresso do Evento
     * @param data a data do Evento
-    * @param caracteristicas as caracteriticas de um EventoEmBar
+    * @param nomeDoBar o nome do bar onde ocorre o Evento
+    * @param inicioHappyHour a hora de início do HappyHour
+    * @param duracaoHappyHour a duração do HappyHour em horas
     * @param historico o historico que contém todos os eventos
     * @return o evento criado
     */
@@ -178,7 +185,8 @@ public class Organizadora {
     * @param nome o nome do Evento
     * @param precoIngresso o preço do Ingresso do Evento
     * @param data a data do Evento
-    * @param caracteristicas as caracteriticas de um EventoMusicaAoVivo
+    * @param nomeDoArtista o nome do artista
+    * @param generoMusical o gênero músical
     * @param historico o historico que contém todos os eventos
     * @return o evento criado
     */

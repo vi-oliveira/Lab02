@@ -1,4 +1,6 @@
 /*
+ * Evento.java
+ * 
  * Material usado na disciplina MC322 - Programação orientada a objetos.
  * 
  * O atributo data foi alterado de String para LocalDate para que seja possível
@@ -9,6 +11,9 @@
  * visto que ele será alocado para o evento posteriormente. Pela implementação original,
  * o local era fornecido na criação do evento, agora a relação entre os dois objetos se
  * dá no caso da disponibilidade do local na data do evento.
+ * 
+ * A documentação para javadoc de alguns métodos deste arquivo foi
+ * feita com o uso do ChatGPT e posteriormente revisada e/ou corrigida.
  */
 
 package lab02.Eventos;
@@ -24,21 +29,30 @@ import lab02.Eventos.Caracteristicas.CaracteristicaDeEvento;
 import lab02.Exceptions.EventoNaoEncontradoException;
 import lab02.Exceptions.IngressoEsgotadoException;
 
+/**
+ * Classe abstrata que representa um evento genérico.
+ * 
+ * Um evento possui características definidas por um objeto {@link CaracteristicaDeEvento}.
+ * Esta classe permite a venda de ingressos para clientes, tratando possíveis exceções
+ * como ingressos esgotados ou eventos incorretos.
+ * 
+ * @author Vinícius de Oliveira - 251527
+ */
 public abstract class Evento {
+    /**
+     * Características do evento, como local, ingressos vendidos, etc.
+     */
     protected CaracteristicaDeEvento caracteristicas;
 
     /**
      * Construtor da classe Evento
-     * @param nome o nome do Evento
-     * @param precoIngresso o preço do Ingresso do Evento
-     * @param organizadora a organizadora do Evento
-     * @param data a data do Evento
+     * @param caracteristicas as caracteristicas do Evento
      */
     public Evento(CaracteristicaDeEvento caracteristicas) {
         this.caracteristicas = caracteristicas;
     }
 
-        /**
+    /**
      * Retorna o nome do Evento
      * @return o nome do Evento
      */
@@ -86,10 +100,18 @@ public abstract class Evento {
         this.caracteristicas.setPrecoIngresso(precoIngresso);
     }
 
+    /**
+     * Retorna as características do Evento
+     * @return as características do Evento
+     */
     public CaracteristicaDeEvento getCaracteristicas(){
         return caracteristicas;
     }
 
+    /**
+     * Altera as características do Evento para 'caracteristicas'
+     * @param caracteristicas as novas características do Evento
+     */
     public void setCaracteristicas(CaracteristicaDeEvento caracteristicas){
         this.caracteristicas = caracteristicas;
     }
@@ -118,42 +140,57 @@ public abstract class Evento {
         return caracteristicas.getOrganizadora();
     }
     
+    /**
+     * Gera uma descrição genérica de um evneto,
+     * com nome e data.
+     * @return uma String com a descrição do evento
+     */
     public String descricao(){
-        return "Evento: " + this.caracteristicas.getNome() + " - Local: " + this.caracteristicas.getLocal().getNome();
+        return "Evento: " + this.caracteristicas.getNome() + " - Data: " + this.caracteristicas.getData();
     }
 
     /**
-     * Adiciona um novo ingresso à lista de ingressos vendidos
-     * @param ingresso o ingresso que foi vendido
-     * @param cliente o cliente que comprou o ingresso
-     * @throws IngressoEsgotadoException se a capacidade máxima do local do evento for atingida,
-     * é lançado o erro de ingresso esgotado
+     * Realiza a venda de um único ingresso para um cliente.
+     *
+     * @param cliente o cliente que está comprando o ingresso
+     * @param ingresso o ingresso a ser vendido
+     * @throws IngressoEsgotadoException se a capacidade máxima do local já foi atingida
+     * @throws EventoNaoEncontradoException se o ingresso fornecido não pertence a este evento
      */
-    public void venderIngresso(Cliente cliente, Ingresso ingresso) throws IngressoEsgotadoException, EventoNaoEncontradoException {
-        if (this.caracteristicas.getIngressosVendidos().size() + 1 > this.caracteristicas.getLocal().getCapacidade()){
+    public void venderIngresso(Cliente cliente, Ingresso ingresso)
+    throws IngressoEsgotadoException, EventoNaoEncontradoException {
+        if (this.caracteristicas.getIngressosVendidos().size() + 1 >
+        this.caracteristicas.getLocal().getCapacidade()){
             throw new IngressoEsgotadoException("Os ingressos esgotaram");
         }
         if (!(ingresso.getEvento().equals(this))){
-            throw new EventoNaoEncontradoException("O evento do ingresso e o evento fornecido são diferentes: " + ingresso.getEvento().getNome() + " != " + this.getNome());
+            throw new EventoNaoEncontradoException(
+                "O evento do ingresso e o evento fornecido são diferentes: "
+                + ingresso.getEvento().getNome() + " != " + this.getNome());
         }
         this.caracteristicas.getIngressosVendidos().add(ingresso);
         cliente.adicionarIngresso(ingresso);
     }
 
     /**
-     * Adiciona um novo ingresso à lista de ingressos vendidos
-     * @param ingresso o ingresso que foi vendido
-     * @param cliente o cliente que comprou o ingresso
-     * @throws IngressoEsgotadoException se a capacidade máxima do local do evento for atingida,
-     * é lançado o erro de ingresso esgotado
+     * Realiza a venda de múltiplos ingressos para um cliente.
+     *
+     * @param cliente o cliente que está comprando os ingressos
+     * @param ingressos a lista de ingressos a serem vendidos
+     * @throws IngressoEsgotadoException se a venda dos ingressos ultrapassar a capacidade do local
+     * @throws EventoNaoEncontradoException se algum ingresso da lista não pertence a este evento
      */
-    public void venderIngresso(Cliente cliente, List<Ingresso> ingressos) throws IngressoEsgotadoException, EventoNaoEncontradoException {
-        if (this.caracteristicas.getIngressosVendidos().size() + ingressos.size() > this.caracteristicas.getLocal().getCapacidade()){
+    public void venderIngresso(Cliente cliente, List<Ingresso> ingressos)
+    throws IngressoEsgotadoException, EventoNaoEncontradoException {
+        if (this.caracteristicas.getIngressosVendidos().size() + ingressos.size() >
+        this.caracteristicas.getLocal().getCapacidade()){
             throw new IngressoEsgotadoException("Os ingressos esgotaram");
         }
         for (Ingresso ingresso : ingressos){
             if (!(ingresso.getEvento().equals(this))){
-                throw new EventoNaoEncontradoException("O evento de algum ingresso e o evento fornecido são diferentes (Nenhum ingresso vendido)");
+                throw new EventoNaoEncontradoException(
+                    "O evento de algum ingresso e o evento fornecido são " +
+                    "diferentes (Nenhum ingresso vendido)");
             }
         }
         this.caracteristicas.getIngressosVendidos().addAll(ingressos);

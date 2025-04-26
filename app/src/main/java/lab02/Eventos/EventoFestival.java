@@ -1,4 +1,6 @@
 /*
+ * EventoFestival.java
+ * 
  * Material usado na disciplina MC322 - Programação orientada a objetos.
  */
 
@@ -6,13 +8,19 @@ package lab02.Eventos;
 
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoFestival;
 
+/**
+ * Representa um evento festival.
+ * 
+ * Esta classe estende {@link Evento} e implementa {@link Duravel},
+ * além de utilizar {@link CaracteristicaEventoFestival} para
+ * armazenar informações específicas de um festival.
+ * 
+ * @author Vinícius de Oliveira - 251527
+ */
 public class EventoFestival extends Evento implements Duravel {     
     /**
     * Construtor da classe EventoFestival
-    * @param nome o nome do Evento
-    * @param precoIngresso o preço do Ingresso do Evento
-    * @param dataInicio a data de início do Festival
-    * @param dataFim a data de fim do Festival
+    * @param caracteristicas as características específicas do festival
     */
     public EventoFestival(CaracteristicaEventoFestival caracteristicas) {
         super(caracteristicas);
@@ -20,7 +28,7 @@ public class EventoFestival extends Evento implements Duravel {
     
     /**
     * Retorna a dura o do Festival em dias
-    * @return a dura o do Festival
+    * @return a dura o do Festival em dias
     */
     public int getDuracao() {
         CaracteristicaEventoFestival caracteristicas = (CaracteristicaEventoFestival) super.getCaracteristicas();
@@ -29,16 +37,21 @@ public class EventoFestival extends Evento implements Duravel {
 
 
     /**
-     * Retorna uma string contendo a descri o do Festival, com seu nome, lineup, local e dura o
-     * @return uma string com a descri o do Festival
+     * Retorna uma string contendo a descri o do Festival, com seu nome, lineup, local e duração
+     * @return uma string com a descrição do Festival
      */
     @Override
     public String descricao() {
         CaracteristicaEventoFestival caracteristicas = (CaracteristicaEventoFestival) super.getCaracteristicas();
         if (caracteristicas.getLocal() != null){
-            return "Festival: " + caracteristicas.getNome() + " - Lineup: " + caracteristicas.getLineup() + " - Local: " + caracteristicas.getLocal().getNome() + " - Duração: " + caracteristicas.getDuracao();
+            return "Festival: " + caracteristicas.getNome() +
+            " - Lineup: " + caracteristicas.getLineup() +
+            " - Local: " + caracteristicas.getLocal().getNome() +
+            " - Duração: " + caracteristicas.getDuracao();
         } else {
-            return "Festival: " + caracteristicas.getNome() + " - Lineup: " + caracteristicas.getLineup() + " - Local: Indefinido - Duração: " + caracteristicas.getDuracao();
+            return "Festival: " + caracteristicas.getNome() +
+            " - Lineup: " + caracteristicas.getLineup() +
+            " - Local: Indefinido - Duração: " + caracteristicas.getDuracao();
         }
     }
 }

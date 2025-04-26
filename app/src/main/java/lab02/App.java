@@ -41,8 +41,14 @@ import lab02.Notificacoes.Notificavel;
 public class App {
 
     /**
+     * Construtor padrão da classe App.
+     * Construtor vazio, pois a classe é utilizada apenas para a main.
+     */
+    public App(){}
+
+    /**
      * Aplicação principal
-     * @param args
+     * @param args argumentos para execução
      */
     public static void main(String[] args) {
 

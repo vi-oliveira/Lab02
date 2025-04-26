@@ -1,3 +1,9 @@
+/*
+ * CaracteristicaDeEvento.java
+ * 
+ * Material usado na disciplina MC322 - Programação orientada a objetos.
+ * 
+ */
 package lab02.Eventos.Caracteristicas;
 
 import java.time.LocalDate;
@@ -8,11 +14,35 @@ import lab02.Ingresso;
 import lab02.Local;
 import lab02.Organizadora;
 
+/**
+ * Classe que define um comportamento para características de eventos.
+ * 
+ * @author Vinícius de Oliveira - 251527
+ */
 public abstract class CaracteristicaDeEvento {
+    /**
+     * O nome do evento.
+     */
     protected String nome;
+    
+    /**
+     * O local onde o evento será realizado.
+     */
     protected Local local;
+
+    /**
+     * O preço de cada ingresso para o evento.
+     */
     protected double precoIngresso;
+
+    /**
+     * A organizadora responsável pelo evento.
+     */
     protected Organizadora organizadora;
+
+    /**
+     * A data em que o evento ocorrerá.
+     */
     protected LocalDate data;
     private List<Ingresso> ingressosVendidos;
 
@@ -23,7 +53,8 @@ public abstract class CaracteristicaDeEvento {
      * @param organizadora a organizadora do Evento
      * @param data a data do Evento
      */
-    public CaracteristicaDeEvento(String nome, double precoIngresso, Organizadora organizadora, LocalDate data) {
+    public CaracteristicaDeEvento(String nome, double precoIngresso,
+    Organizadora organizadora, LocalDate data) {
         this.nome = nome;
         this.local = null;
         this.precoIngresso = precoIngresso;
@@ -102,9 +133,5 @@ public abstract class CaracteristicaDeEvento {
      */
     public Organizadora getOrganizadora(){
         return this.organizadora;
-    }
-
-    public String descricao(){
-        return "Evento: " + this.nome + " - Local: " + this.local;
     }
 }
