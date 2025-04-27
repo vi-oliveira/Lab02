@@ -12,7 +12,7 @@ import java.util.List;
 
 import lab02.Ingresso;
 import lab02.Local;
-import lab02.Organizadora;
+import lab02.Eventos.Organizadora;
 
 /**
  * Classe que define um comportamento para características de eventos.

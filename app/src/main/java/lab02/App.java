@@ -17,6 +17,7 @@ import lab02.Eventos.EventoJogo;
 import lab02.Eventos.EventoShow;
 import lab02.Eventos.HistoricoEventos;
 import lab02.Eventos.ImobiliariaDeEventos;
+import lab02.Eventos.Organizadora;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoEmBar;
 import lab02.Exceptions.CancelamentoNaoPermitidoException;
 import lab02.Exceptions.CapacidadeInsuficienteException;
@@ -63,7 +64,7 @@ public class App {
         12345678, "Rua Adalberto Einstein nº321");
         HistoricoEventos historico = new HistoricoEventos();
 
-        // Eventos para exemplos:
+        // Eventos para exemplos (serão criados mais quando necessário):
         EventoShow showAzul = superEventos.criarEvento("Caneta Azul",
         200, LocalDate.of(2025, 4, 29), "Manoel Gomes", historico);
         EventoShow show2 = superEventos.criarEvento("Biridin",
@@ -80,14 +81,16 @@ public class App {
             System.out.println(e);
         }
 
-        // Ingressos para exemplos:
+        // Ingressos para exemplos (serão criados mais quando necessário):
         Ingresso ingresso1 = new Ingresso(showAzul, showAzul.getPrecoIngresso());
         Ingresso ingresso2 = new Ingresso(show2, show2.getPrecoIngresso());
+
 
 
         // DEMONSTRAÇÃO PASSO 1:
         System.out.println("DEMONSTRAÇÃO DO CLIENTE:");
         Cliente Alonso = new Cliente("Alonso", "Alonso@gmail.com", "1234-4321");
+        // O método "adicionarIngresso" é chamado dentro de "VenderIngresso"
         try{
             showAzul.venderIngresso(Alonso, ingresso1);
             show2.venderIngresso(Alonso, ingresso2);
@@ -95,9 +98,10 @@ public class App {
             System.out.println(e);
         }
 
-        System.out.println("Ingressos antes: " + Alonso.getIngressos());
+        System.out.println(" - Ingressos antes: " + Alonso.getIngressos());
         Alonso.removerIngresso(ingresso2);
-        System.out.println("Ingressos depois: " + Alonso.getIngressos());
+        System.out.println(" - Ingressos depois: " + Alonso.getIngressos());
+
 
 
         // DEMONSTRAÇÃO PASSO 2:
@@ -114,8 +118,6 @@ public class App {
         }
 
         List<String> times = new ArrayList<String>(Arrays.asList("time1", "time2"));
-        // EventoJogo eventoJogo = superEventos.criarEvento("Campeonato",
-        // 950, LocalDate.of(2026, 2, 20), times, historico);
 
         // Sobrecarga nos ingressos dos clientes:
         Cliente Ana = new Cliente("Ana", "anana@unicamp.com", "9876-6789");
@@ -124,6 +126,9 @@ public class App {
         Ingresso ingressoFest2 = new Ingresso(eventoFestival, eventoFestival.getPrecoIngresso());
         List<Ingresso> ingressos = new ArrayList<Ingresso>(Arrays.asList(ingressoFest, ingressoFest2));
 
+        /* Como o método"adicionarIngresso" é chamado
+         * por "venderIngresso", os dois tem sobrecarga.
+         */
         try{
             showAzul.venderIngresso(Ana, ingresso3);
             eventoFestival.venderIngresso(Ana, ingressos);
@@ -131,7 +136,7 @@ public class App {
             System.out.println(e);
         }
 
-        System.out.println("Ingressos sobrecarga: ");
+        System.out.println(" - Ingressos sobrecarga: ");
         System.out.println(Ana.getIngressos());
 
         // Sobrecarga na busca por locais:
@@ -144,14 +149,15 @@ public class App {
         System.out.println("Busca de locais:");
         try {
             Local localEncontrado = imobiliaria.buscarLocal("Ibirapuera");
-            System.out.println("Local por nome: " + localEncontrado.getNome());
+            System.out.println(" - Local por nome: ");
+            System.out.println(localEncontrado.getNome());
         } catch (LocalNaoEncontradoException e) {
             System.out.println(e);
         }
 
         try {
             List<Local> locaisEncontrados = imobiliaria.buscarLocal(200);
-            System.out.println("Local por capacidade: ");
+            System.out.println(" - Local por capacidade: ");
             for (Local local : locaisEncontrados){
                 System.out.println(local.getNome() + "; ");
             }
@@ -159,9 +165,11 @@ public class App {
             System.out.println(e);
         }
 
+
+
         // DEMONSTRAÇÃO PASSO 3:
         System.out.println("\nDEMONSTRAÇÃO DAS EXCEÇÕES:");
-
+        
         Local estadio = new Local("Estádio Grande", 300);
         imobiliaria.adicionarLocal(estadio);
         List<String> lineupFestival2 = new ArrayList<String>(Arrays.asList("lineup2"));
@@ -169,7 +177,8 @@ public class App {
         EventoFestival festivalCarros = superEventos.criarEvento("Festival de Carros",
         20, LocalDate.of(2025, 9, 14), lineupFestival2, 4, historico);
 
-        EventoShow eventoShow = superEventos.criarEvento("show", 20, LocalDate.of(2025, 9, 16), "Manoel Gomes", historico);
+        EventoShow eventoShow = superEventos.criarEvento("show",
+        20, LocalDate.of(2025, 9, 16), "Manoel Gomes", historico);
 
         try {
             estadio.alocarParaEvento(festivalCarros);
@@ -179,26 +188,28 @@ public class App {
             System.out.println("Festival de carros: " + e);
         }
 
+        /* Por conta da duração do Evento festivalCarros,
+        * o local não está disponível na data do eventoShow. */
         try {
             estadio.alocarParaEvento(eventoShow);
         } catch (CapacidadeInsuficienteException e) {
             System.out.println("Evento Show: " + e);
         } catch (LocalIndisponivelException e){
             System.out.println("Evento Show: " + e);
-            /* Por conta da duração do Evento festivalCarros,
-             * o local não está disponível na data do eventoShow. */
         }
 
+        /* Em outro local disponível na data
+        é possível alocar sem problemas. */
         try {
             teatroArena.alocarParaEvento(eventoShow);
         } catch (CapacidadeInsuficienteException e) {
             System.out.println("Evento Show: " + e);
         } catch (LocalIndisponivelException e){
             System.out.println("Evento Show: " + e);
-            /* Agora é possível alocar sem problemas. */
         }
 
-        EventoShow eventoShow2 = superEventos.criarEvento("Evento 2", 20, LocalDate.of(2025, 5, 21), "Manoel Gomes", historico);
+        EventoShow eventoShow2 = superEventos.criarEvento("Evento 2",
+        20, LocalDate.of(2025, 5, 21), "Manoel Gomes", historico);
         try {
             teatroMunicipal.alocarParaEvento(eventoShow2);
         } catch (Exception e) {
@@ -234,6 +245,7 @@ public class App {
         System.out.println("Ingressos Julio depois:\n" + julio.getIngressos());
 
 
+
         // DEMONSTRAÇÃO PASSO 4:
         System.out.println("\nDEMONSTRAÇÃO DOS FILTROS:");
 
@@ -248,7 +260,8 @@ public class App {
             System.out.println(e);
         }
 
-        EventoShow classico = superEventos.criarEvento("Clássicos", 150, LocalDate.of(2025, 8, 31), "Mozart", historico);
+        EventoShow classico = superEventos.criarEvento("Clássicos",
+        150, LocalDate.of(2025, 8, 31), "Mozart", historico);
         try {
             ibirapuera.alocarParaEvento(classico);
         } catch (CapacidadeInsuficienteException e) {
@@ -257,7 +270,8 @@ public class App {
             System.out.println(e);
         }
 
-        EventoFestival festivalCultural = superEventos.criarEvento("Festival Cultural", 10, LocalDate.of(2025, 7, 3), null, 3, historico);
+        EventoFestival festivalCultural = superEventos.criarEvento("Festival Cultural",
+        10, LocalDate.of(2025, 7, 3), null, 3, historico);
         try {
             teatroMunicipal.alocarParaEvento(festivalCultural);
         } catch (CapacidadeInsuficienteException e) {
@@ -273,13 +287,13 @@ public class App {
         System.out.println(" - Eventos filtrados por nome:");
         for(Evento evento : eventosFiltradosPorNome) System.out.println(evento.getClass());
 
-        // O objeto classico atende ao filtro abaixo:
+        // O objeto "classico" atende ao filtro abaixo:
         Filtro filtroData = new EventoPorDataFiltro(LocalDate.of(2025, 8, 31));
         List<Evento> eventosFiltradosPorData = historico.buscarEventos(filtroData);
         System.out.println(" - Eventos filtrados por data:");
         for(Evento evento : eventosFiltradosPorData) System.out.println(evento.getNome());
 
-        // Combinação de filtros (O objeto festivalCultural atende aos filtros): 
+        // Combinação de filtros (O objeto festivalCultural atende aos filtros (tipo/classe e local)): 
         Filtro filtroTipo = new EventoPorTipoFiltro(EventoFestival.class);
         Filtro filtroLocal = new EventoPorLocalFiltro(teatroMunicipal);
         List<Filtro> filtros = new ArrayList<Filtro>(Arrays.asList(filtroTipo, filtroLocal));
@@ -288,6 +302,7 @@ public class App {
         List<Evento> eventosFiltradosPorTipoLocal = historico.buscarEventos(filtrosTipoLocal);
         System.out.println(" - Eventos filtrados por tipo e local:");
         for(Evento evento : eventosFiltradosPorTipoLocal) System.out.println(evento.getNome());
+
 
 
         // DEMONSTRAÇÃO PASSO 5:
@@ -302,6 +317,7 @@ public class App {
         julio.adiconarNotificacao(julioNotificacaoEmail);
         julio.adiconarNotificacao(julioNotificaSMS);
         julio.enviarNotificacoes();
+
 
 
         // DEMONSTRAÇÃO PASSO 6:
@@ -323,6 +339,7 @@ public class App {
         }
 
 
+        
         // DEMONSTRAÇÃO PASSO 7:
         System.out.println("\nDEMONSTRAÇÃO DA COMPOSIÇÃO:");
         EventoEmBar eventoBar = superEventos.criarEvento("SUPER BAR",
@@ -337,5 +354,11 @@ public class App {
         System.out.println("Evento bar: " + eventoBar.getNome());
         CaracteristicaEventoEmBar caracteristicasBar = (CaracteristicaEventoEmBar) eventoBar.getCaracteristicas();
         System.out.println("Nome do bar: " + caracteristicasBar.getNomeDoBar());
+
+
+
+        // DEMONSTRAÇÃO PASSO 8
+        /*Por conta de todo o cenário de uso feito até aqui,
+         * cada um dos itens já foi demosntrado. */
     }
 }

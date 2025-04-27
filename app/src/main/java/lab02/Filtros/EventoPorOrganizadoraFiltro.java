@@ -11,8 +11,8 @@ package lab02.Filtros;
 import java.util.ArrayList;
 import java.util.List;
 
-import lab02.Organizadora;
 import lab02.Eventos.Evento;
+import lab02.Eventos.Organizadora;
 
 /**
  * Filtro que seleciona eventos com base na organizadora.

@@ -3,20 +3,12 @@
  * 
  * Material usado na disciplina MC322 - Programação orientada a objetos.
  */
-package lab02;
+package lab02.Eventos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import lab02.Eventos.Evento;
-import lab02.Eventos.EventoEmBar;
-import lab02.Eventos.EventoFestival;
-import lab02.Eventos.EventoFestivalDeShows;
-import lab02.Eventos.EventoJogo;
-import lab02.Eventos.EventoMusicaAoVivo;
-import lab02.Eventos.EventoShow;
-import lab02.Eventos.HistoricoEventos;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoEmBar;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoFestival;
 import lab02.Eventos.Caracteristicas.CaracteristicaEventoFestivalDeShows;

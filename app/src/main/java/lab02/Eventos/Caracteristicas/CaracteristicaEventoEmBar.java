@@ -10,7 +10,7 @@ package lab02.Eventos.Caracteristicas;
 
 import java.time.LocalDate;
 
-import lab02.Organizadora;
+import lab02.Eventos.Organizadora;
 
 /**
  * Representa as características específicas de um evento realizado em um bar.

@@ -23,7 +23,6 @@ import java.util.List;
 
 import lab02.Ingresso;
 import lab02.Local;
-import lab02.Organizadora;
 import lab02.Clientes.Cliente;
 import lab02.Eventos.Caracteristicas.CaracteristicaDeEvento;
 import lab02.Exceptions.EventoNaoEncontradoException;

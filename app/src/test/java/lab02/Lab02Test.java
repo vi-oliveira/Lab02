@@ -17,6 +17,7 @@ import lab02.Eventos.EventoFestivalDeShows;
 import lab02.Eventos.EventoMusicaAoVivo;
 import lab02.Eventos.EventoShow;
 import lab02.Eventos.HistoricoEventos;
+import lab02.Eventos.Organizadora;
 import lab02.Exceptions.CancelamentoNaoPermitidoException;
 import lab02.Exceptions.EventoNaoEncontradoException;
 import lab02.Exceptions.IngressoEsgotadoException;
@@ -25,6 +26,14 @@ import lab02.Notificacoes.NotificacaoEmail;
 import lab02.Notificacoes.Notificavel;
 
 public class Lab02Test {
+
+    /**
+     * Testa as funções de notificação do cliente.
+     * A notificação é adicionada (vai para a lista de notificações pendentes).
+     * Depois o usuário é notificado (vai para a lista de notificações enviadas).
+     * Espera-se que a lista de notificações pendentes esteja vazia e a de notificações
+     * enviadas tenha 1 notificação.
+     */
     @Test
     public void notificar() {
         Cliente daniel = new Cliente("Daniel Franco", "shaolinMatadorDePorco@gmail.com", "4002-8922");
@@ -38,6 +47,10 @@ public class Lab02Test {
         assertEquals(1, daniel.getNotificaoEnviadas().size());
     }
 
+    /**
+     * Testa a comparação entre clientes.
+     * Espera-se que os dois clientes tenham em comum o evento showGoogle.
+     */
     @Test
     public void compararClientes() {
         Local teatroArena = new Local("Teatro de Arena", 100);
@@ -70,8 +83,12 @@ public class Lab02Test {
         assertEquals(1, eventosEmComum.size());
     }
 
+    /**
+     * Testa a implementação de EventoEmBar
+     * Espera-se que a descrição do evento esteja correta
+     */
     @Test
-    public void testarEventoBar(){
+    public void testarEventoEmBar(){
         Local barzinho = new Local("Bar Tolomeu", 10);
 
         HistoricoEventos historico = new HistoricoEventos();
@@ -94,6 +111,10 @@ public class Lab02Test {
         
     }
 
+    /**
+     * Testa a implementação de EventoMusicaAoVivo
+     * Espera-se que a descrição do evento esteja correta
+     */
     @Test
     public void testarEventoMusicaAoVivo(){
         Local palco = new Local("Mega Palco", 200);
@@ -118,6 +139,13 @@ public class Lab02Test {
         
     }
     
+    /**
+     * Testa a implementação da nova hierarquia de eventos
+     * Espera-se que seja possível criar um evento, por meio
+     * de composição, que tenha características em comum com outro
+     * evento (EventoFestival). Na demonstração é necessário apenas
+     * adicionar um outro objeto com as características secundárias.
+     */
     @Test
     public void novaHierarquia(){
         Local teatroArena = new Local("Teatro de Arena", 100);
@@ -146,6 +174,13 @@ public class Lab02Test {
         assertEquals(2, festivalDeShows.getShows().size());
     }
 
+    /* TRATAMENTO DE 2 ERROS: 
+    CancelamentoNaoPermitidoException e EventoNaoEncontradoException*/
+
+    /**
+     * Testa o tratamento da exceção de cancelamento não permitido
+     * Espera-se que a mensagem de erro seja a correta.
+     */
     @Test
     public void tratamentoCancelamentoNaoPermitido(){
         Local teatroArena = new Local("Teatro de Arena", 100);
@@ -191,6 +226,11 @@ public class Lab02Test {
         assertEquals(mensagemDeErroEsperada, mensagemDeErroRecebida);
     }
 
+    /**
+     * Testa o tratamento da exceção de Evento não encontrado.
+     * (Caso com a venda de 1 ingresso)
+     * Espera-se que a mensagem de erro seja a correta.
+     */
     @Test
     public void tratamentoEventoNaoEncontradoUmIngresso(){
         Local teatroArena = new Local("Teatro de Arena", 100);
@@ -229,6 +269,11 @@ public class Lab02Test {
         assertEquals(mensagemDeErroEsperada, mensagemDeErroRecebida);
     }
 
+    /**
+     * Testa o tratamento da exceção de Evento não encontrado.
+     * (Caso com a venda por uma lista de ingressos)
+     * Espera-se que a mensagem de erro seja a correta.
+     */
     @Test
     public void tratamentoEventoNaoEncontradoListIngressos(){
         Local teatroArena = new Local("Teatro de Arena", 100);
